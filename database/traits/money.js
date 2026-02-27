@@ -1,0 +1,293 @@
+DATABASE = (window.DATABASE || []).concat([
+{
+    ifAnyFlag: [ [ "setting-fantasy" ] ],
+    id:"money-name-1",
+    tags:[ "money", "name" ],
+    methods:{
+       medium:{
+            EN:"Shards"
+        },
+        mediumSymbol:{
+            EN:"s"
+        }
+    }
+},{
+    ifAnyFlag: [ [ "setting-investigation" ] ],
+    id:"money-name-2",
+    tags:[ "money", "name" ],
+    methods:{
+       medium:{
+            EN:"Silver"
+        },
+        mediumSymbol:{
+            EN:"s"
+        }
+    }
+},{
+    ifAnyFlag: [ [ "setting-grim" ] ],
+    id:"money-name-3",
+    tags:[ "money", "name" ],
+    methods:{
+       medium:{
+            EN:"Souls"
+        },
+        mediumSymbol:{
+            EN:"s"
+        }
+    }
+},{
+    ifAnyFlag: [ [ "setting-cyberpunk" ] ],
+    id:"money-name-4",
+    tags:[ "money", "name" ],
+    methods:{
+       medium:{
+            EN:"Credits"
+        },
+        mediumSymbol:{
+            EN:"Cr."
+        }
+    }
+},{
+    ifAnyFlag: [ [ "setting-japan" ] ],
+    id:"money-name-5",
+    tags:[ "money", "name" ],
+    methods:{
+       medium:{
+            EN:"Ryos"
+        },
+        mediumSymbol:{
+            EN:"r"
+        }
+    }
+},{
+    ifAnyFlag: [ [ "setting-wildwest" ] ],
+    id:"money-name-6",
+    tags:[ "money", "name" ],
+    methods:{
+       medium:{
+            EN:"Gold"
+        },
+        mediumSymbol:{
+            EN:"g"
+        }
+    }
+},
+{
+    id:"money-simple",
+    tags:[ "trait", "money", "leveluplootentry", "startingitementry" ],
+    requires:[
+        { id:"moneyName", reuse:true, ofTags:[ [ "money", "name" ] ] },
+        { id:"diceroll", ofTags:[ [ "multiple", "diceroll", "3d10" ] ] },
+        { id:"startingDiceroll", ofTags:[ [ "multiple", "diceroll", "2d6" ] ] },
+        { id:"specialRoll", ofTags:[ [ "single", "diceroll", "d6" ] ] },
+    ],
+    methods:{
+        animalVeryCheap:{
+            EN:{
+                oneOf:[
+                    "5{moneyName.mediumSymbol()}",
+                    "6{moneyName.mediumSymbol()}",
+                    "7{moneyName.mediumSymbol()}",
+                    "8{moneyName.mediumSymbol()}"
+                ]
+            }
+        },
+        animalCheap:{
+            EN:{
+                oneOf:[
+                    "10{moneyName.mediumSymbol()}",
+                    "12{moneyName.mediumSymbol()}",
+                    "13{moneyName.mediumSymbol()}",
+                    "15{moneyName.mediumSymbol()}"
+                ]
+            }
+        },
+        animalFair:{
+            EN:{
+                oneOf:[
+                    "20{moneyName.mediumSymbol()}",
+                    "22{moneyName.mediumSymbol()}",
+                    "25{moneyName.mediumSymbol()}",
+                    "35{moneyName.mediumSymbol()}"
+                ]
+            }
+        },
+        animalPricey:{
+            EN:{
+                oneOf:[
+                    "40{moneyName.mediumSymbol()}",
+                    "45{moneyName.mediumSymbol()}",
+                    "55{moneyName.mediumSymbol()}",
+                    "60{moneyName.mediumSymbol()}"
+                ]
+            }
+        },
+        animalVeryPricey:{
+            EN:{
+                oneOf:[
+                    "80{moneyName.mediumSymbol()}"
+                ]
+            }
+        },
+        serviceCheapRange:{
+            EN:"5-15{moneyName.mediumSymbol()}"
+        },
+        serviceFairRange:{
+            EN:"20-40{moneyName.mediumSymbol()}"
+        },
+        servicePriceyRange:{
+            EN:"30-60{moneyName.mediumSymbol()}"
+        },
+        repairFair:{
+            EN:"25{moneyName.mediumSymbol()}"
+        },
+        repairPricey:{
+            EN:"40{moneyName.mediumSymbol()}"
+        },
+        weaponWorthless:{
+            EN:"worthless"
+        },
+        weaponVeryCheap:{
+            EN:{
+                oneOf:[
+                    "5{moneyName.mediumSymbol()}",
+                    "6{moneyName.mediumSymbol()}",
+                    "7{moneyName.mediumSymbol()}",
+                    "8{moneyName.mediumSymbol()}",
+                ]
+            }
+        },
+        weaponCheap:{
+            EN:{
+                oneOf:[
+                    "10{moneyName.mediumSymbol()}",
+                    "12{moneyName.mediumSymbol()}",
+                    "14{moneyName.mediumSymbol()}",
+                    "15{moneyName.mediumSymbol()}"
+                ]
+            }
+        },
+        weaponFair:{
+            EN:{
+                oneOf:[
+                    "20{moneyName.mediumSymbol()}",
+                    "25{moneyName.mediumSymbol()}",
+                    "30{moneyName.mediumSymbol()}",
+                    "35{moneyName.mediumSymbol()}",
+                ]
+            }
+        },
+        weaponPricey:{
+            EN:{
+                oneOf:[
+                    "40{moneyName.mediumSymbol()}",
+                    "45{moneyName.mediumSymbol()}",
+                    "50{moneyName.mediumSymbol()}",
+                    "55{moneyName.mediumSymbol()}"
+                ]
+            }
+        },
+        weaponVeryPricey:{
+            EN:{
+                oneOf:[
+                    "60{moneyName.mediumSymbol()}"
+                ]
+            }
+        },
+        weaponSuperPricey:{
+            EN:{
+                oneOf:[
+                    "100{moneyName.mediumSymbol()}"
+                ]
+            }
+        },
+        weaponMegaPricey:{
+            EN:{
+                oneOf:[
+                    "200{moneyName.mediumSymbol()}"
+                ]
+            }
+        },
+        ammoFair:{
+            EN:"10{moneyName.mediumSymbol()}"
+        },
+        materialVeryCheap:{
+            // 1-2 (<=4 tiers)
+            EN:{
+                oneOf:[
+                    "1{moneyName.mediumSymbol()}",
+                    "2{moneyName.mediumSymbol()}",
+                ]
+            }
+        },
+        materialCheap:{
+            // 3-5 (<=4 tiers)
+            EN:{
+                oneOf:[
+                    "3{moneyName.mediumSymbol()}",
+                    "4{moneyName.mediumSymbol()}",
+                    "5{moneyName.mediumSymbol()}"
+                ]
+            }
+        },
+        materialFair:{
+            // 6-11 (<=4 tiers)
+            EN:{
+                oneOf:[
+                    "6{moneyName.mediumSymbol()}",
+                    "7{moneyName.mediumSymbol()}",
+                    "8{moneyName.mediumSymbol()}",
+                    "9{moneyName.mediumSymbol()}",
+                    "10{moneyName.mediumSymbol()}"
+                ]
+            }
+        },
+        toolCheap:{
+            // 12-23 (<=4 tiers)
+            EN:{
+                oneOf:[
+                    "12{moneyName.mediumSymbol()}",
+                    "15{moneyName.mediumSymbol()}",
+                    "18{moneyName.mediumSymbol()}",
+                    "21{moneyName.mediumSymbol()}"
+                ]
+            }
+        },
+        toolFair:{
+            // 25-49 (<=4 tiers)
+            EN:{
+                oneOf:[
+                    "25{moneyName.mediumSymbol()}",
+                    "30{moneyName.mediumSymbol()}",
+                    "35{moneyName.mediumSymbol()}",
+                    "40{moneyName.mediumSymbol()}"
+                ]
+            }
+        },
+        toolPricey:{
+            // 50-100 (<=4 tiers)
+            EN:{
+                oneOf:[
+                    "50{moneyName.mediumSymbol()}",
+                    "60{moneyName.mediumSymbol()}",
+                    "70{moneyName.mediumSymbol()}",
+                    "80{moneyName.mediumSymbol()}"
+                ]
+            }
+        },
+        special:{
+            EN:{
+                oneOf:[
+                    "66+{specialRoll}{moneyName.mediumSymbol()}"
+                ]
+            }
+        },
+        startingItemsSteps:{
+            EN:"{startingDiceroll} x 10 {moneyName.medium()} ({moneyName.mediumSymbol()})"
+        },
+        getLevelUpLootEntries:[
+            { result:{ EN:"{diceroll} {moneyName.medium()}" } }
+        ]
+    }
+},
+]);

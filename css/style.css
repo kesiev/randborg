@@ -1,0 +1,121 @@
+
+* {
+    box-sizing: border-box;
+}
+
+BODY {
+    background-color: #222;
+}
+
+.bar {
+  position: fixed;
+  left:0;
+  right:0;
+  top:0;
+  background-color: #000;
+  border-bottom:1px solid #ccc;
+  box-shadow: 0px 1px 2px #000;
+  padding:10px;
+  z-index: 1000;
+}
+
+.viewer {
+  padding-top:50px;
+}
+
+.bar select {
+  border-radius: 5px;
+  font-family: florante_at_lauraregular;
+  background-color: #000;
+  border: 1px solid #ccc;
+  border-bottom: 2px solid #ccc;
+  color:#fff;
+  padding:5px;
+}
+
+.bar .button {
+  transition: all 0.3s;
+  border-radius: 5px;
+  font-family: florante_at_lauraregular;
+  cursor: pointer;
+  background-color: #000;
+  border: 1px solid #ccc;
+  border-bottom: 2px solid #ccc;
+  color:#fff;
+  padding:5px;
+  display:inline-block;
+  transform: scale(1) rotate(0);
+}
+
+.bar .button:hover {
+  transform: scale(1.1) rotate(-1deg);
+}
+
+.bar .logo {
+  position: absolute;
+  left:0;
+  right:0;
+  top:10px;
+  bottom:-10px;
+  pointer-events:none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.bar .right {
+  position: absolute;
+  left:50vw;
+  right:10px;
+  top:10px;
+  text-align: right;
+}
+
+.footer {
+  margin:50px 0 10px 0;
+  padding-bottom: 20px;
+  font-size: 14px;
+  text-align: center;
+  color:#999;
+  font-family: seshat;
+  text-shadow: 0px 1px 1px #000;
+}
+
+.footer A {
+  color:#f00;
+}
+
+@counter-style crosses {
+  system: cyclic;
+  symbols: "\2715";
+  suffix: " ";
+}
+
+@counter-style balloonasterisk {
+  system: cyclic;
+  symbols: "\2724";
+  suffix: " ";
+}
+
+@counter-style rightarrow {
+  system: cyclic;
+  symbols: "\2771";
+  suffix: " ";
+}
+
+@counter-style diamond {
+  system: cyclic;
+  symbols: "\2756";
+  suffix: " ";
+}
+
+@media (max-width: 600px) {
+  .bar .logo {
+    top:45px;
+    bottom: -35px;
+  }
+
+  .footer {
+    font-size: 12px;
+  }
+}

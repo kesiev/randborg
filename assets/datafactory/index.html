@@ -1,0 +1,2279 @@
+<html><head>
+    <script src="../../js/random.js"></script>
+    <script src="../../js/builder.js"></script>
+    <script src="../../js/drawdown.js"></script>
+    <script src="../../js/namegenerator.js"></script>
+    <script src="../../js/hexmap.js"></script>
+    <script src="../../js/borgdecorator.js"></script>
+    <script src="../../database/roll/diceroll.js"></script>
+    <script src="../../database/traits/combat.js"></script>
+    <script src="../../database/traits/sociality.js"></script>
+    <script src="../../database/traits/survival.js"></script>
+    <script src="../../database/traits/magic.js"></script>
+    <script src="../../database/traits/food.js"></script>
+    <script src="../../database/traits/disease.js"></script>
+    <script src="../../database/traits/money.js"></script>
+    <script src="../../database/traits/stat/stat.js"></script>
+    <script src="../../database/traits/spell/names.js"></script>
+    <script src="../../database/traits/spell/effects.js"></script>
+    <script src="../../database/traits/magic/types.js"></script>
+    <script src="../../database/traits/magic/names.js"></script>
+    <script src="../../database/player/creation.js"></script>
+    <script src="../../database/player/abilities.js"></script>
+    <script src="../../database/player/tests.js"></script>
+    <script src="../../database/player/capacity.js"></script>
+    <script src="../../database/player/hitpoints.js"></script>
+    <script src="../../database/player/death.js"></script>
+    <script src="../../database/player/exhaust.js"></script>
+    <script src="../../database/player/levelup.js"></script>
+    <script src="../../database/combat/parts/initiative.js"></script>
+    <script src="../../database/combat/parts/action.js"></script>
+    <script src="../../database/combat/parts/criticals.js"></script>
+    <script src="../../database/combat/parts/fumble.js"></script>
+    <script src="../../database/combat/parts/protection.js"></script>
+    <script src="../../database/combat/parts/time.js"></script>
+    <script src="../../database/combat/parts/rest.js"></script>
+    <script src="../../database/combat/parts/morale.js"></script>
+    <script src="../../database/combat/parts/hierarchy.js"></script>
+    <script src="../../database/combat/rules.js"></script>
+    <script src="../../database/setting/parts/rulers.js"></script>
+    <script src="../../database/setting/oracles.js"></script>
+    <script src="../../database/setting/types.js"></script>
+    <script src="../../database/npc/reaction.js"></script>
+    <script src="../../database/npc/adversaries.js"></script>
+    <script src="../../database/npc/adversaries/types.js"></script>
+    <script src="../../database/npc/adversaries/adjectives.js"></script>
+    <script src="../../database/npc/adversaries/attacks.js"></script>
+    <script src="../../database/npc/adversaries/defenses.js"></script>
+    <script src="../../database/npc/adversaries/descriptions.js"></script>
+    <script src="../../database/extras/rules.js"></script>
+    <script src="../../database/extras/requests.js"></script>
+    <script src="../../database/map/map.js"></script>
+    <script src="../../database/map/biome.js"></script>
+    <script src="../../database/map/season.js"></script>
+    <script src="../../database/items/transportation.js"></script>
+    <script src="../../database/items/accessories.js"></script>
+    <script src="../../database/items/weapons.js"></script>
+    <script src="../../database/items/armors.js"></script>
+    <script src="../../database/items/services.js"></script>
+    <script src="../../database/items/animals.js"></script>
+    <script src="../../database/faction/faction.js"></script>
+    <script src="../../database/rpg.js"></script>
+
+</head><body onload="onl()"></body><script>
+function onl() {
+    
+    const
+        DATASETS = {
+            adversaryType:{
+                export:{
+                    filter:{
+                        tags:[ "adversary","type" ]
+                    },
+                    columns:{
+                        header:[
+                            { id:"ifAnyFlags" },
+                            { id:"tags", except:[ "adversary", "type" ] }
+                        ],
+                        data:"render.EN"
+                    }
+                },
+                import:{
+                    notes:"For database/npc/adversaries/type.js",
+                    structure:{
+                        tags: { _PUTHERE:"tags" },
+                        ifAnyFlag: [ { _PUTHERE:"ifAnyFlags" } ],
+                        result: { EN: { _PUTHERE:"value" } }
+                    }
+                }
+            },
+            adversaryDescriptions:{
+                export:{
+                    filter:{
+                        tags:[ "adversary","description" ]
+                    },
+                    columns:{
+                        header:[
+                            { id:"ifAnyFlags" },
+                            { id:"tags", except:[ "adversary", "description" ] }
+                        ],
+                        data:"render.EN"
+                    }
+                },
+                import:{
+                    notes:"For database/npc/adversaries/descriptions.js",
+                    structure:{
+                        tags: { _PUTHERE:"tags" },
+                        ifAnyFlag: [ { _PUTHERE:"ifAnyFlags" } ],
+                        result: { EN: { _PUTHERE:"value" } }
+                    }
+                }
+            },
+            adversaryDefenses:{
+                export:{
+                    filter:{
+                        tags:[ "adversary","defense" ]
+                    },
+                    columns:{
+                        header:[
+                            { id:"ifAnyFlags" },
+                            { id:"tags", except:[ "adversary", "defense" ] }
+                        ],
+                        data:"render.EN"
+                    }
+                },
+                import:{
+                    notes:"For database/npc/adversaries/defenses.js",
+                    structure:{
+                        tags: { _PUTHERE:"tags" },
+                        ifAnyFlag: [ { _PUTHERE:"ifAnyFlags" } ],
+                        result: { EN: { _PUTHERE:"value" } }
+                    }
+                }
+            },
+            adversaryAttacks:{
+                export:{
+                    filter:{
+                        tags:[ "adversary","attack" ]
+                    },
+                    columns:{
+                        header:[
+                            { id:"ifAnyFlags" },
+                            { id:"tags", except:[ "adversary", "attack" ] }
+                        ],
+                        data:"render.EN"
+                    }
+                },
+                import:{
+                    notes:"For database/npc/adversaries/attacks.js",
+                    structure:{
+                        tags: { _PUTHERE:"tags" },
+                        ifAnyFlag: [ { _PUTHERE:"ifAnyFlags" } ],
+                        result: { EN: { _PUTHERE:"value" } }
+                    }
+                }
+            },
+            adversaryAdjective:{
+                export:{
+                    filter:{
+                        tags:[ "adversary","adjective" ]
+                    },
+                    columns:{
+                        header:[
+                            { id:"ifAnyFlags" },
+                            { id:"tags", except:[ "adversary", "adjective" ] }
+                        ],
+                        data:"render.EN"
+                    }
+                },
+                import:{
+                    notes:"For database/npc/adversaries/adjectives.js",
+                    structure:{
+                        tags: { _PUTHERE:"tags" },
+                        ifAnyFlag: [ { _PUTHERE:"ifAnyFlags" } ],
+                        result: { EN: { _PUTHERE:"value" } }
+                    }
+                }
+            },
+            playerDeath:{
+                export:{
+                    filter:{
+                        tags:[ "deadlabel" ]
+                    },
+                    columns:{
+                        header:[
+                            { id:"ifAnyFlags" },
+                            { id:"tags" }
+                        ],
+                        data:"methods.getFullName.EN"
+                    }
+                },
+                import:{
+                    notes:"For database/player/death.js",
+                    structure:{
+                        id:{ _PUTHERE:"progressive", prefix:"deadlabel-dead" },
+                        tags: { _PUTHERE:"tags" },
+                        ifAnyFlag: [ { _PUTHERE:"ifAnyFlags" } ],
+                        methods: {
+                            getFullName:{
+                                EN: { _PUTHERE:"value" }
+                            }
+                        }
+                    }
+                }
+            },
+            oracles:{
+                export:{
+                    filter:{
+                        tags:[ "oracle" ],
+                        excludeTags:[ "requests" ],
+                    },
+                    columns:{
+                        header:[
+                            { id:"ifAnyFlags" },
+                            { id:"tags", except:[ "oracle" ] }
+                        ],
+                        data:"render.EN"
+                    }
+                },
+                import:{
+                    notes:"For database/setting/oracles.js",
+                    allowDuplicates:[
+                        "{$.makeNameFrom(\"The Day Of [^Adjective]\")}",
+                        "{$.makeNameFrom(\"[^Adjective]day\")}",
+                        "{$.makeNameFrom(\"[^Adjective] Day\")}"
+                    ],
+                    structure:{
+                        tags: { _PUTHERE:"tags" },
+                        ifAnyFlag: [ { _PUTHERE:"ifAnyFlags" } ],
+                        result: { EN: { _PUTHERE:"value" } }
+                    }
+                }
+            },
+            mapNames:{
+                export:{
+                    filter:{
+                        tags:[ "map", "name" ]
+                    },
+                    columns:{
+                        header:[
+                            { id:"ifAnyFlags" },
+                            { id:"tags", except:[ "map", "name", "general", "specific" ] }
+                        ],
+                        data:"methods.generate.EN"
+                    }
+                },
+                import:{
+                    notes:"For database/map/map.js",
+                    allowDuplicates:[
+                        "{$.makeNameFrom(\"[^Place]\")}"
+                    ],
+                    structure:{
+                        ifAnyFlag: [ { _PUTHERE:"ifAnyFlags" } ],
+                        tags:{ _PUTHERE:"tags" },
+                        generate: { EN: { _PUTHERE:"value" } }
+                    }
+                }
+            },
+            factions:{
+                export:{
+                    filter:{
+                        tags:[ "faction", "name" ]
+                    },
+                    columns:{
+                        header:[
+                            { id:"ifAnyFlags" }
+                        ],
+                        data:"methods.generate.EN"
+                    }
+                },
+                import:{
+                    notes:"For database/faction/faction.js",
+                    structure:{
+                        ifAnyFlag: [ { _PUTHERE:"ifAnyFlags" } ],
+                        generate: { EN: { _PUTHERE:"value" } }
+                    }
+                }
+            },
+            rulers:{
+                export:{
+                    filter:{
+                        tags:[ "ruler" ]
+                    },
+                    columns:{
+                        header:[
+                            { id:"ifAnyFlags" }
+                        ],
+                        data:"methods.getDemandName.EN"
+                    }
+                },
+                import:{
+                    notes:"For database/setting/parts/rulers.js",
+                    structure:{
+                        id:{ _PUTHERE:"progressive", prefix:"ruler-name" },
+                        ifAnyFlag: [ { _PUTHERE:"ifAnyFlags" } ],
+                        tags:[ "ruler" ],
+                        methods: { getDemandName:{ EN: { _PUTHERE:"value" } } }
+                    }
+                }
+            },
+            oraclesRequests:{
+                export:{
+                    filter:{
+                        tags:[ "oracle", "requests" ],
+                    },
+                    columns:{
+                        header:[
+                            { id:"ifAnyFlags" },
+                        ],
+                        data:"render.EN"
+                    }
+                },
+                import:{
+                    notes:"For database/extras/requests.js",
+                    structure:{
+                        ifAnyFlag: [ { _PUTHERE:"ifAnyFlags" } ],
+                        requires: { _PUTHERE:"solveRequires", set:{
+                            meleeweapon: { add:[ { id:"meleeweapon", ofTags:[ [ "oracle", "meleeweapon" ] ] } ] },
+                            innocentperson: { add:[ { id:"innocentperson", ofTags:[ [ "oracle", "innocentperson" ] ] } ] },
+                            badperson: { add:[ { id:"badperson", ofTags:[ [ "oracle", "badperson" ] ] } ] },
+                            lake: { add:[ { id:"lake", ofTags:[ [ "oracle", "lake" ] ] } ] },
+                            creature: { add:[ { id:"creature", ofTags:[ [ "oracle", "creature" ] ] } ] },
+                            festivity: { add:[ { id:"festivity", ofTags:[ [ "oracle", "festivity" ] ] } ] },
+                            poi: { add:[ { id:"poi", ofTags:[ [ "oracle", "poi" ] ] } ] },
+                            mineral: { add:[ { id:"mineral", ofTags:[ [ "oracle", "mineral" ] ] } ] },
+                            bodyfluid: { add:[ { id:"bodyfluid", ofTags:[ [ "oracle", "bodyfluid" ] ] } ] },
+                            bodypart: { add:[ { id:"bodypart", ofTags:[ [ "oracle", "bodypart" ] ] } ] },
+                            processedfood: { add:[ { id:"processedfood", ofTags:[ [ "oracle", "processedfood" ] ] } ] },
+                            unprocessedfood: { add:[ { id:"unprocessedfood", ofTags:[ [ "oracle", "unprocessedfood" ] ] } ] },
+                            multiple: { add:[ { id:"multiple", ofTags:[ [ "oracle", "multiple" ] ] } ] },
+                            evil: { add:[ { id:"evil", ofTags:[ [ "oracle", "evil" ] ] } ] },
+                            drink: { add:[ { id:"drink", ofTags:[ [ "oracle", "drink" ] ] } ] },
+                            uniqueprefix: { add:[ { id:"uniqueprefix", ofTags:[ [ "oracle", "uniqueprefix" ] ] } ] },
+                        } },
+                        result: { EN: { _PUTHERE:"value" } }
+                    }
+                }
+            },
+            accessories:{
+                export:{
+                    filter:{
+                        tags:[ "accessory" ],
+                        excludeTags:[ "armor" ],
+                    },
+                    simpleTable:[
+                        { id:"ifAnyFlag", macro:"ifAnyFlag", type:"string" },
+                        { id:"isStarting", macro:"findTag", tag:"startingaccessory", type:"lazyboolean" },
+                        { id:"price", macro:"requireFind", find:"getPrice", type:"lazystring" },
+                        { id:"requires", macro:"requireExclude", exclude:[ "getPrice" ], type:"json" },
+                        { id:"value", data:"render.EN", type:"string" }
+                    ]
+                },
+                import:{
+                    notes:"For database/items/accessories.js",
+                    structure:{
+                        isStarting:{ _PUTHERE:"column", id:"isStarting" },
+                        ifAnyFlag: [ { _PUTHERE:"column", id:"ifAnyFlag" } ],
+                        requires:{ _PUTHERE:"column", id:"requires" },
+                        price: { _PUTHERE:"column", id:"price" },
+                        result: { EN: { _PUTHERE:"column", id:"value" } }
+                    }
+                }
+            },
+            weapons:{
+                export:{
+                    filter:{
+                        tags:[ "ammoweapon" ],
+                    },
+                    simpleTable:[
+                        { id:"ifAnyFlag", macro:"ifAnyFlag", type:"string" },
+                        { id:"isStarting", macro:"findTag", tag:"startingweapon", type:"lazyboolean" },
+                        { id:"isAmmo", macro:"findTag", tag:"ammo", type:"lazyboolean" },
+                        { id:"tags", macro:"tags", tag:"tags", exclude:[ "ammo", "weapon", "ammoweapon", "startingweapon", "weaponprice" ], type:"stringlist" },
+                        { id:"price", macro:"requireFind", find:"getPrice", type:"lazystring" },
+                        { id:"requires", macro:"requireExclude", exclude:[ "getPrice" ], type:"json" },
+                        { id:"value", data:"render.EN", type:"string" }
+                    ]
+                },
+                import:{
+                    notes:"For database/items/weapons.js",
+                    structure:{
+                        isAmmo:{ _PUTHERE:"column", id:"isAmmo" },
+                        isStarting:{ _PUTHERE:"column", id:"isStarting" },
+                        ifAnyFlag: [ { _PUTHERE:"column", id:"ifAnyFlag" } ],
+                        tags: { _PUTHERE:"column", id:"tags" },
+                        requires:{ _PUTHERE:"column", id:"requires" },
+                        price: { _PUTHERE:"column", id:"price" },
+                        result: { EN: { _PUTHERE:"column", id:"value" } }
+                    }
+                }
+            },
+            animals:{
+                export:{
+                    filter:{
+                        tags:[ "animal" ],
+                    },
+                    simpleTable:[
+                        { id:"ifAnyFlag", macro:"ifAnyFlag", type:"string" },
+                        { id:"isStarting", macro:"findTag", tag:"startingaccessory", type:"lazyboolean" },
+                        { id:"price", macro:"requireFind", find:"getPrice", type:"lazystring" },
+                        { id:"requires", macro:"requireExclude", exclude:[ "getPrice" ], type:"json" },
+                        { id:"value", data:"render.EN", type:"string" }
+                    ]
+                },
+                import:{
+                    notes:"For database/items/animals.js",
+                    structure:{
+                        isStarting:{ _PUTHERE:"column", id:"isStarting" },
+                        ifAnyFlag: [ { _PUTHERE:"column", id:"ifAnyFlag" } ],
+                        requires:{ _PUTHERE:"column", id:"requires" },
+                        price: { _PUTHERE:"column", id:"price" },
+                        result: { EN: { _PUTHERE:"column", id:"value" } }
+                    }
+                }
+            },
+            armors:{
+                export:{
+                    filter:{
+                        tags:[ "armor" ],
+                    },
+                    simpleTable:[
+                        { id:"ifAnyFlag", macro:"ifAnyFlag", type:"string" },
+                        { id:"isStarting", macro:"findTag", tag:"startingarmor", type:"lazyboolean" },
+                        { id:"price", macro:"requireFind", find:"getPrice", type:"lazystring" },
+                        { id:"tags", macro:"tags", tag:"tags", exclude:[ "startingarmor", "armorprice", "armor" ], type:"stringlist" },
+                        { id:"requires", macro:"requireExclude", exclude:[ "getPrice" ], type:"json" },
+                        { id:"value", data:"render.EN", type:"string" }
+                    ]
+                },
+                import:{
+                    notes:"For database/items/armors.js",
+                    structure:{
+                        isStarting:{ _PUTHERE:"column", id:"isStarting" },
+                        ifAnyFlag: [ { _PUTHERE:"column", id:"ifAnyFlag" } ],
+                        tags: { _PUTHERE:"column", id:"tags" },
+                        requires:{ _PUTHERE:"column", id:"requires" },
+                        price: { _PUTHERE:"column", id:"price" },
+                        result: { EN: { _PUTHERE:"column", id:"value" } }
+                    }
+                }
+            },
+            spellEffects:{
+                export:{
+                    filter:{
+                        tags:[ "spell", "effect" ],
+                    },
+                    simpleTable:[
+                         { id:"ifAnyFlag", macro:"ifAnyFlag", type:"string" },
+                        { id:"tags", macro:"tags", tag:"tags", exclude:[ "spell", "effect" ], type:"stringlist" },
+                        { id:"requires", macro:"requireExclude", exclude:[ "getPrice" ], type:"json" },
+                        { id:"methods", data:"methods", type:"json" },
+                        { id:"value", data:"render.EN", type:"string" }
+                    ]
+                },
+                import:{
+                    notes:"For database/traits/spell/effects.js",
+                    structure:{
+                        ifAnyFlag: [ { _PUTHERE:"column", id:"ifAnyFlag" } ],
+                        tags: { _PUTHERE:"column", id:"tags" },
+                        requires:{ _PUTHERE:"column", id:"requires" },
+                        methods:{ _PUTHERE:"column", id:"methods" },
+                        result: { EN: { _PUTHERE:"column", id:"value" } }
+                    }
+                }
+            },
+            spellNames:{
+                export:{
+                    filter:{
+                        tags:[ "spell", "name" ],
+                    },
+                    columns:{
+                        header:[
+                            { id:"ifAnyFlags" },
+                            { id:"tags", except:[ "spell", "name" ] }
+                        ],
+                        data:"methods.generate.EN"
+                    }
+                },
+                import:{
+                    notes:"For database/traits/spell/names.js",
+                    structure:{
+                        ifAnyFlag: [ { _PUTHERE:"ifAnyFlags" } ],
+                        tags: { _PUTHERE:"tags" },
+                        result: { EN: { _PUTHERE:"value" } }
+                    }
+                }
+            },
+            services:{
+                export:{
+                    filter:{
+                        tags:[ "service" ],
+                    },
+                    simpleTable:[
+                        { id:"ifAnyFlag", macro:"ifAnyFlag", type:"string" },
+                        { id:"tags", macro:"tags", tag:"tags", exclude:[ "service", "serviceprice" ], type:"stringlist" },
+                        { id:"price", macro:"requireFind", find:"getPrice", type:"lazystring" },
+                        { id:"value", data:"render.EN", type:"string" }
+                    ]
+                },
+                import:{
+                    notes:"For database/traits/spells.js",
+                    structure:{
+                        ifAnyFlag: [ { _PUTHERE:"column", id:"ifAnyFlag" } ],
+                        tags: { _PUTHERE:"column", id:"tags" },
+                        price: { _PUTHERE:"column", id:"price" },
+                        result: { EN: { _PUTHERE:"column", id:"value" } }
+                    }
+                }
+            },
+            transports:{
+                export:{
+                    filter:{
+                        tags:[ "transport" ],
+                    },
+                    simpleTable:[
+                        { id:"ifAnyFlag", macro:"ifAnyFlag", type:"string" },
+                        { id:"isStarting", macro:"findTag", tag:"startingtransport", type:"lazyboolean" },
+                        { id:"tags", macro:"tags", tag:"tags", exclude:[ "transport", "accessoryprice", "startingtransport" ], type:"stringlist" },
+                        { id:"price", macro:"requireFind", find:"getPrice", type:"lazystring" },
+                        { id:"value", data:"render.EN", type:"string" }
+                    ]
+                },
+                import:{
+                    notes:"For database/items/transportation.js",
+                    structure:{
+                        ifAnyFlag: [ { _PUTHERE:"column", id:"ifAnyFlag" } ],
+                        isStarting:{ _PUTHERE:"column", id:"isStarting" },
+                        tags: { _PUTHERE:"column", id:"tags" },
+                        price: { _PUTHERE:"column", id:"price" },
+                        result: { EN: { _PUTHERE:"column", id:"value" } }
+                    }
+                }
+            },
+            omens:{
+                export:{
+                    filter:{
+                        tags:[ "omen", "name" ],
+                    },
+                    simpleTable:[
+                        { id:"ifAnyFlag", macro:"ifAnyFlag", type:"string" },
+                        { id:"single", data:"methods.single.EN", type:"string" },
+                        { id:"plural", data:"methods.plural.EN", type:"string" },
+                        { id:"lore", data:"methods.lore.EN", type:"string" },
+                    ]
+                },
+                import:{
+                    notes:"For database/extras/rules.js",
+                    structure:{
+                        id:{ _PUTHERE:"progressive", prefix:"omen-name" },
+                        tags:[ "omen", "name" ],
+                        ifAnyFlag: [ { _PUTHERE:"column", id:"ifAnyFlag" } ],
+                        methods:{
+                            single:{ EN: { _PUTHERE:"column", id:"single" } },
+                            plural:{ EN: { _PUTHERE:"column", id:"plural" } },
+                            lore:{ EN: { _PUTHERE:"column", id:"lore" } },
+                        }
+                    }
+                }
+            },
+            biomes:{
+                export:{
+                    filter:{
+                        tags:[ "map", "biome" ],
+                    },
+                    simpleTable:[
+                        { id:"ifAnyFlag", macro:"ifAnyFlag", type:"string" },
+                        { id:"names", data:"methods.getNames.EN.oneOf", type:"stringlist" },
+                        { id:"adjectives", data:"methods.getAdjective.EN.oneOf", type:"stringlist" },
+                    ]
+                },
+                import:{
+                    notes:"For database/map/biomes.js",
+                    structure:{
+                        ifAnyFlag: [ { _PUTHERE:"column", id:"ifAnyFlag" } ],
+                        id:{ _PUTHERE:"progressive", prefix:"biome-type" },
+                        tags:[ "map", "biome" ],
+                        methods:{
+                            getNames:{ EN: { oneOf:{_PUTHERE:"column", id:"names" } } },
+                            getAdjective:{ EN: { oneOf:{_PUTHERE:"column", id:"adjectives" } } },
+                        }
+                    }
+                }
+            },
+            magicTypes:{
+                export:{
+                    filter:{
+                        tags:[ "magictype" ],
+                    },
+                    simpleTable:[
+                        { id:"ifAnyFlag", macro:"ifAnyFlag", type:"string" },
+                        { id:"tags", macro:"tags", tag:"tags", exclude:[ "magictype", "type" ], append:["magictype","type"], type:"stringlist" },
+                        { id:"mean", data:"methods.mean.EN", type:"string" },
+                        { id:"section", data:"methods.section.EN", type:"string" },
+                        { id:"value", data:"render.EN", type:"string" },
+                    ]
+                },
+                import:{
+                    notes:"For database/traits/magic/types.js",
+                    structure:{
+                        ifAnyFlag: [ { _PUTHERE:"column", id:"ifAnyFlag" } ],
+                        id:{ _PUTHERE:"progressive", prefix:"magic-type" },
+                        tags: { _PUTHERE:"column", id:"tags" },
+                        methods:{
+                            mean:{ EN: {_PUTHERE:"column", id:"mean" } },
+                            section:{ EN: {_PUTHERE:"column", id:"section" } },
+                        },
+                        render:{
+                            EN:{_PUTHERE:"column", id:"value" }
+                        }
+                    }
+                }
+            },
+            playerInvalidating:{
+                export:{
+                    filter:{
+                        tags:[ "invalidating" ]
+                    },
+                    columns:{
+                        header:[
+                            { id:"ifAnyFlags" },
+                            { id:"tags" }
+                        ],
+                        data:"methods.getFullName.EN"
+                    }
+                },
+                import:{
+                    notes:"For database/player/exhaust.js",
+                    structure:{
+                        id:{ _PUTHERE:"progressive", prefix:"invalidating-", addTag:1 },
+                        tags: { _PUTHERE:"tags" },
+                        ifAnyFlag: [ { _PUTHERE:"ifAnyFlags" } ],
+                        methods: {
+                            getFullName:{
+                                EN: { _PUTHERE:"value" }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        TOOLS = {
+            overview:(ui)=>{
+                ui.innerHTML = makeOverview();
+            },
+            graphviz:(ui)=>{
+                let
+                    title = document.createElement("h1"),
+                    notes = document.createElement("div"),
+                    ta = document.createElement("textarea"),
+                    graphViz = makeGraphViz(DATABASE);
+
+                ta.cols = 100;
+                ta.rows = 30;
+                title.innerHTML = "Database GraphViz";
+                notes.style.padding = "10px";
+                notes.innerHTML = "Paste this <a href='https://dreampuf.github.io/GraphvizOnline/' target=_blank>here</a> and have fun ;)<br>";
+                if (graphViz.errors.length) {
+                    notes.style.backgroundColor="#f00";
+                    notes.style.color="#fff";
+                    notes.innerHTML += "<hr>"+graphViz.errors.join("<br>");
+                }
+                ui.appendChild(title);
+                ui.appendChild(notes);
+                ta.value = graphViz.text;
+                ui.appendChild(ta);
+            },
+            dataCleanCheck:(ui)=>{
+                let
+                    title = document.createElement("h1"),
+                    subtitle = document.createElement("h2"),
+                    notes = document.createElement("div"),
+                    subnotes = document.createElement("div"),
+                    subnotesHtml = "",
+                    check = performDataCleanCheck();
+
+                title.innerHTML = "Database Clean Check";
+                subtitle.innerHTML = "Info";
+                notes.style.padding = "10px";
+                ui.appendChild(title);
+                if (check.errors.length) {
+                    notes.style.backgroundColor="#f00";
+                    notes.style.color="#fff";
+                    notes.innerHTML = check.errors.join("<br>");
+                } else {
+                    notes.innerHTML = "All ok.";
+                }
+                ui.appendChild(notes);
+                ui.appendChild(subtitle);
+                subnotesHtml+="<p>Used stats:</p><ul>";
+                for (let k in check.infos.virtualStats) {
+                    subnotesHtml+="<li>stat-"+k+" ("+check.infos.virtualStats[k]+" times)</li>";
+                }
+                subnotesHtml+="</ul>";
+                subnotes.innerHTML = subnotesHtml;
+                ui.appendChild(subnotes);
+            },
+            statMap:(ui)=>{
+                let
+                    title = document.createElement("h1"),
+                    notes = document.createElement("div"),
+                    notesHtml = "",
+                    statsmap = makeStatsMap();
+
+                title.innerHTML = "Stats map";
+                notes.style.padding = "10px";
+
+                if (statsmap.errors.length) {
+                    notesHtml+="<div style='padding:10;background-color:#f00;color:#fff'>"+statsmap.errors.join("<br>")+"</div>";
+                }
+
+                notesHtml+="<table><tr><td></td>";
+                statsmap.columns.forEach(col=>{
+                    notesHtml+="<td "+(statsmap.summary[col].error?"style='background-color:red'":"")+"><b>"+col+"</b></td>";
+                });
+                for (let k in statsmap.map) {
+                    notesHtml+="<tr><td><b>"+k+"</b><br><i>"+statsmap.samples[k][0].join(", ")+"</i>"+(statsmap.samples[k][1]?"<br><span style='color:#999'>"+statsmap.samples[k][1].join(", ")+"</span>":"")+"</td>";
+                    statsmap.columns.forEach(col=>{
+                        if (statsmap.map[k][col])
+                            switch (statsmap.map[k][col]) {
+                                case "base":{
+                                    notesHtml+="<td style='background-color:green'>base</td>";
+                                    break;
+                                }
+                                case "simple":{
+                                    notesHtml+="<td style='background-color:yellow'>simple</td>";
+                                    break;
+                                }
+                                case "alt":{
+                                    notesHtml+="<td style='background-color:cyan'>alt</td>";
+                                    break;
+                                }
+                                default:{
+                                    notesHtml+="<td style='background-color:red'>"+statsmap.map[k][col]+"</td>";
+                                    break;
+                                }
+                            }
+                        else
+                            notesHtml+="<td>-</td>";                            
+                    });
+                    notesHtml+="</tr>";
+                }
+                notesHtml+="</tr></table>";
+                notes.innerHTML = notesHtml;
+                ui.appendChild(title);
+                ui.appendChild(notes);
+            },
+            bruteforce:(ui,status)=>{
+                if (!status) {
+                    let
+                        title = document.createElement("h1"),
+                        bar = document.createElement("div");
+
+                    title.innerHTML = "Bruteforce";
+                    ui.appendChild(title);
+                    ui.appendChild(bar);
+
+                    status = { cyclesDone:0, cyclesToGo:1000, seed:Math.floor(Math.random()*9999999), calledIds:{}, results:[], bar:bar };
+                }
+
+                if (status.cyclesToGo) {
+                    console.log("Seed "+status.seed+" ("+status.cyclesToGo+" tests to go)...");
+                    status.bar.innerHTML = "Seed "+status.seed+" ("+status.cyclesToGo+" tests to go)...";
+
+                    let
+                        builder = new Builder(DATABASE, status.seed);
+
+                    builder.initialize(()=>{
+                        let
+                            render = builder.renderInstanceById(0,"rpg"),
+                            text = render.text;
+
+                        if (
+                            text.match(/\[object/gi) ||
+                            text.match(/undefined/gi) ||
+                            false
+                        ) {
+                            status.cyclesToGo = 0;
+                            status.error = "Unallowed/error text found at seed "+status.seed;
+                            status.text = text;
+                            TOOLS.bruteforce(ui,status);
+                        } else {
+                            status.cyclesToGo--;
+                            status.cyclesDone++;
+                            status.seed++;
+
+                            for (let k in render.globals.ids) {
+                                if (!status.calledIds[k])
+                                    status.calledIds[k] = 0;
+                                status.calledIds[k]++;
+                            }
+
+                            setTimeout(()=>{
+                                TOOLS.bruteforce(ui,status);
+                            },1)
+                        }
+                    });
+                } else {
+                    if (status.error) {
+                        status.bar.innerHTML = "<div style='padding:5px;margin:5px 0;background-color:#f00;color:#fff'>"+status.error+" error(s)</div>";
+                        if (status.text) {
+                            let
+                                ta = document.createElement("textarea");
+                            ta.cols = 100;
+                            ta.rows = 30;
+                            ta.value = status.text;
+                            status.bar.appendChild(ta);
+                        }
+                    } else {
+                        let
+                            results = "",
+                            table = [],
+                            uncalled = [];
+
+                        for (let k in status.calledIds) {
+                            table.push({ id:k, count:status.calledIds[k] });
+                        }
+
+                        DATABASE.forEach(row=>{
+                            if (!status.calledIds[row.id])
+                                uncalled.push(row);
+                        })
+
+                        table.sort((a,b)=>{
+                            if (a.id > b.id)
+                                return 1;
+                            else if (a.id < b.id)
+                                return -1;
+                            else
+                                return 0;
+                        })
+
+                        results+="<table>";
+
+                        uncalled.forEach(obj=>{
+                            let
+                                color = "#f00";
+                            if (
+                                obj.id.startsWith("samplestat-") ||
+                                obj.id.startsWith("oracle-region-")
+                            ) {
+                                color = "#0f0";
+                            } else {
+                                console.log("Unused",obj)
+                            }
+                            results+="<tr><td style='background-color:"+color+"'><b>"+obj.id+"</b></td><td>0</td></tr>";
+                        })
+
+                        table.forEach(row=>{
+                            results+="<tr><td><b>"+row.id+"</b></td><td>"+row.count+"</td></tr>";
+                        })
+
+                        results+="</table>";
+
+                        status.bar.innerHTML = status.cyclesDone+" tests done. All OK.<hr>"+results;
+                    }
+                    
+                }
+                    
+            }
+        };
+
+    NameGenerator.LANGUAGES.EN.dictionary = "../../"+NameGenerator.LANGUAGES.EN.dictionary;
+
+    function addToSheet(sheet, columns, record) {
+        let
+            id,
+            value,
+            column = [];
+
+        columns.header.forEach(col=>{
+            switch (col.id) {
+                case "ifAnyFlags":{
+                    if (record.ifAnyFlag) {
+                        record.ifAnyFlag.forEach(flag=>{
+                            let
+                                marker = "FL:"+flag;
+                            if (!sheet.stats[marker])
+                                sheet.stats[marker] = 0;
+                            sheet.stats[marker]++;
+                            column.push(marker);
+                        })
+                    } else {
+                        column.push("FL:ANY")
+                    }
+                    break;
+                }
+                case "tags":{
+                    record.tags.forEach(tag=>{
+                        if (!col.except || (col.except.indexOf(tag)==-1)) {
+                            let
+                                marker = "T:"+tag;
+                            if (!sheet.stats[marker])
+                                sheet.stats[marker] = 0;
+                            sheet.stats[marker]++;
+                            column.push(marker);
+                        }
+                    })
+                    break;
+                }
+            }
+        });
+
+        columns.data.split(".").forEach(part=>{
+            record = record[part];
+        })
+
+        id = column.join("_");
+
+        if (!sheet.data[id]) {
+            sheet.data[id] = [];
+            sheet.columns.push({
+                values:column,
+                id:id
+            });
+        }
+
+        sheet.data[id].push(record);
+
+    }
+
+    function setCell(table,x,y,value) {
+        if (!table[y])
+            table[y] = [];
+        table[y][x] = value;
+    }
+
+    function exportDataset(set) {
+        let
+            rules = set.export,
+            sheet = { stats:{}, columns:[], data:{} },
+            table = [],
+            csv = "",
+            headerSize = 0,
+            elements = DATABASE.filter(e=>{
+                let
+                    isOk = true;
+                if (rules.filter) {
+                    if (rules.filter.tags) {
+                        rules.filter.tags.forEach(tag=>{
+                            if (e.tags.indexOf(tag) == -1)
+                                isOk = false;
+                        })
+                    }
+                    if (rules.filter.excludeTags) {
+                        rules.filter.excludeTags.forEach(tag=>{
+                            if (e.tags.indexOf(tag) != -1)
+                                isOk = false;
+                        })
+                    }
+                }
+                return isOk;
+            });
+
+        if (set.export.simpleTable) {
+
+            table.push(set.export.simpleTable.map(column=>column.id));
+
+            elements.forEach(element=>{
+                table.push(set.export.simpleTable.map(column=>{
+                    let
+                        value = element;
+
+                    switch (column.macro) {
+                        case "ifAnyFlag":{
+                            value = element.ifAnyFlag ? element.ifAnyFlag[0][0] : "";
+                            break;
+                        }
+                        case "tags":{
+                            value = element.tags.filter(tag=>column.exclude.indexOf(tag)==-1);
+                            break;
+                        }
+                        case "requireFind":{
+                            value = "";
+                            if (element.requires) {
+                                element.requires.forEach(require=>{
+                                    if (require.id == column.find)
+                                        value = require.call;
+                                })
+                            }
+                            break;
+                        }
+                        case "requireExclude":{
+                            value = [];
+                            if (element.requires) {
+                                element.requires.forEach(require=>{
+                                    if (column.exclude.indexOf(require.id) == -1)
+                                        value.push(require);
+                                })
+                            }
+                            if (!value.length)
+                                value=null;
+                            break;
+                        }
+                        case "findTag":{
+                            value = value.tags.indexOf(column.tag) != -1;
+                            break;
+                        }
+                        default:{
+                            column.data.split(".").forEach(part=>{
+                                value = value[part];
+                            });
+                        }
+                    }
+                    
+                    switch (column.type) {
+                        case "lazyboolean":{
+                            if (value)
+                                return "yes";
+                            else
+                                return "";
+                        }
+                        case "stringlist":{
+                            if (value)
+                                return value.join(",");
+                            break;
+                        }
+                        case "lazystring":
+                        case "string":{
+                            return value;
+                        }
+                        case "json":{
+                            return value === null ? "" : JSON.stringify(value);
+                        }
+                        default:{
+                            console.error("Unknow simpletable column type",column.type)
+                        }
+                    }
+                }))
+            })
+
+            table.forEach(row=>{
+                csv+=row.join("\t")+"\n";
+            })
+
+        } else {
+
+            elements.forEach(element=>{
+                addToSheet(sheet, rules.columns, element);
+            });
+
+            sheet.columns.forEach(column=>{
+                if (column.values.length > headerSize)
+                    headerSize = column.values.length;
+            });
+
+            setCell(table,0,headerSize,"---");
+            headerSize++;
+
+            sheet.columns.forEach((column,pos)=>{
+                column.values.forEach((value,id)=>{
+                    setCell(table,pos,id,value);
+                })
+                sheet.data[column.id].forEach((data,id)=>{
+                    setCell(table,pos,headerSize+id,data);
+                })
+            });
+
+            for (let i=0;i<table.length;i++) {
+                let
+                    row = table[i];
+                if (row && row.length) {
+                    for (let j=0;j<row.length;j++) {
+                        csv+=(row[j]||"")+"\t";
+                    }
+                    csv = csv.substr(0,csv.length-1)+"\n";
+                } else {
+                    csv+="\n";
+                }
+            }
+
+        }
+
+        return csv;
+    }
+
+    function buildStructure(model, column, value, progressive) {
+        if (typeof model == "object") {
+            let
+                copy;
+            if (Array.isArray(model)) {
+                copy = [];
+                for (let i=0;i<model.length;i++) {
+                    let
+                        newValue = buildStructure(model[i], column, value, progressive);
+                    copy[i] = newValue;
+                }
+                return copy;
+            } else if (model._PUTHERE) {
+                switch (model._PUTHERE) {
+                    case "value":{
+                        return value;
+                    }
+                    case "tags":{
+                        return column.tags;
+                    }
+                    case "ifAnyFlags":{
+                        return column.ifAnyFlags;
+                    }
+                    case "progressive":{
+                        return model.prefix+(model.addTag ? column.tags[model.addTag] : "")+"-"+progressive;
+                    }
+                    case "column":{
+                        return value[model.id];
+                    }
+                    case "solveRequires":{
+                        let
+                            out = [];
+                        value.replace(/([a-z]+)\(\)/g,(m,m1)=>{
+                            if (model.set[m1]) {
+                                out = out.concat(model.set[m1].add);
+                            } else {
+                                console.error("Can't add requirement for",m1);
+                            }
+                        })
+                        return out.length ? out : null;
+                        break;
+                    }
+                }
+            } else {
+                copy = {};
+                for (let k in model) {
+                    let
+                        newValue = buildStructure(model[k], column, value, progressive);
+
+                    if ((newValue !== null) && (newValue !== undefined))
+                        copy[k] = newValue;
+                }
+                return copy;
+            }
+        } else return model;
+    }
+
+    function jsonFormatter(obj,tabs, keeponeline,prevkey) {
+        let
+            out = "";
+        if (!tabs)
+            tabs = "";
+        if (typeof obj == "object") {
+            if (Array.isArray(obj)) {
+                let
+                    elements = [];
+                
+                for (let i=0;i<obj.length;i++) {
+                    let
+                        newValue = jsonFormatter(obj[i], tabs+"\t", (prevkey == "requires" || prevkey == "methods" || prevkey == "resultTable" ) ? true : keeponeline, prevkey);
+                    elements.push(keeponeline ? newValue : tabs+"\t"+newValue);
+                }
+                if (elements.length)
+                    if (keeponeline)
+                        return "[ "+elements.join(", ")+" ]";
+                    else
+                        return "[\n"+elements.join(",\n")+"\n"+tabs+"]";
+                else
+                    return "[]";
+            } else {
+                let
+                    count = 0,
+                    elements = [];
+
+                for (let k in obj)
+                    count++;
+
+                for (let k in obj) {
+                    let
+                        newValue = jsonFormatter(obj[k], tabs+"\t", k=="ifAnyFlag" || k == "tags" ? true : keeponeline,k);
+                    if (((k=="ifAnyFlag") && newValue == "[ [] ]") || (newValue === null)) {
+                        // Skip empty ifAnyFlags
+                    } else {
+                        elements.push(keeponeline ? k+": "+newValue : tabs+"\t"+k+": "+newValue);
+                    }
+                }
+
+                if (elements.length)
+                    if (keeponeline)
+                        return "{ "+elements.join(", ")+" }";
+                    else
+                        return "{\n"+elements.join(",\n")+"\n"+tabs+"}";
+                else
+                    return "{}";
+            }
+        } else if (typeof obj == "string") {
+            return "\""+obj.replace(/"/g,"\\\"")+"\""
+        } else
+            return obj;
+    }
+
+    function importDataset(set, data) {
+        let
+            errors = [],
+            result = [],
+            sheet = [],
+            index = {},
+            json,
+            olddata,
+            parts,
+            pos = 0;
+
+        if (set.export.simpleTable) {
+            let
+                header = [];
+
+            data = data.split("\n");
+
+            data.forEach((row,id)=>{
+                if (row.trim()) {
+                    row = row.split("\t");
+                    if (!pos) {
+                        row.forEach((cell,id)=>{
+                            set.export.simpleTable.forEach(column=>{
+                                if (column.id == cell) {
+                                    header[id] = column;
+                                }
+                            })
+                        })
+                    } else {
+                        let
+                            record = {},
+                            value = {};
+
+                        header.forEach((column,pos)=>{
+                            let
+                                value = row[pos];
+
+                            switch (column.type) {
+                                case "lazyboolean":{
+                                    value = value.trim();
+                                    if (value)
+                                        value = true;
+                                    else
+                                        value = null;
+                                    break;
+                                }
+                                case "stringlist":{
+                                    value = value.trim();
+                                    if (value)
+                                        value = value.split(",");
+                                    else
+                                        value = [];
+                                    if (column.append) {
+                                        value = value.concat(column.append);
+                                    }
+                                    break;
+                                }
+                                case "lazystring":{
+                                    value = value.trim();
+                                    if (!value)
+                                        value = null;
+                                    break;
+                                }
+                                case "string":{
+                                    break;
+                                }
+                                case "json":{
+                                    value = value.trim();
+                                    if (value)
+                                        value = JSON.parse(value);
+                                    else
+                                        value = null;
+                                    break;
+                                }
+                                default:{
+                                    console.error("Wrong column type",column.type);
+                                }
+                            }
+
+                            if (column.macro == "ifAnyFlag")
+                                if (value)
+                                    value = [ value ];
+                                else
+                                    value = [];
+
+                            if (value !== null)
+                                record[column.id] = value;
+
+                        });
+
+                        if ((record.value===undefined) || !index[record.value] || (set.import.allowDuplicates && set.import.allowDuplicates.indexOf(record.value)!=-1) ) {
+                            index[record.value]=record;
+                            result.push(buildStructure(set.import.structure,0,record,pos));
+                        } else {
+                            errors.push("Duplicate value "+record.value+": "+JSON.stringify(record)+" and "+JSON.stringify(index[record.value]));
+                        }
+
+                    }
+
+                    pos++;
+
+                }
+                
+            })
+
+            json = result.map(obj=>jsonFormatter(obj)).join(",");
+
+     } else {
+
+            data = data.trim();
+            
+            do {
+                olddata = data;
+                data = data.replace(/\t+\n/g,"\n\n");
+                data = data.replace(/\n\n\n/g,"\n\n");
+            } while (olddata != data);
+
+            parts = data.split("---\n");
+
+            if (parts.length == 2) {
+
+                parts[0].split("\n").forEach(row=>{
+                    row.split("\t").forEach((name,id)=>{
+                        name = name.trim();
+                        if (name) {
+                            let
+                                nameparts = name.split(":");
+                            if (!sheet[id]) {
+                                sheet[id] = { ifAnyFlags:[], tags:[], data:[] };
+                            }
+                            switch (nameparts[0]) {
+                                case "FL":{
+                                    if (nameparts[1] != "ANY")
+                                        sheet[id].ifAnyFlags.push(nameparts[1]);
+                                    break;
+                                }
+                                case "T":{
+                                    sheet[id].tags.push(nameparts[1]);
+                                    break;
+                                }
+                            }
+                        }
+                    })
+                })
+
+                parts[1].split("\n").forEach(row=>{
+                    row.split("\t").forEach((value,id)=>{
+                        value = value.trim();
+                        if (value) {
+                            let
+                                debugId = sheet[id].ifAnyFlags.join(",")+"/"+sheet[id].tags.join(",");
+                            if (!index[value] || (set.import.allowDuplicates && set.import.allowDuplicates.indexOf(value)!=-1) ) {
+                                index[value] = debugId;
+                                sheet[id].data.push(value);
+                            } else {
+                                errors.push("Duplicate value "+value+": "+debugId+" and "+index[value]);
+                            }
+                        }
+                    })
+                });
+
+                let
+                    progressive = 0;
+                sheet.forEach(column=>{
+                    column.data.forEach(value=>{
+                        progressive++;
+                        result.push(buildStructure(set.import.structure,column,value,progressive));
+                    })
+                })
+
+                json = result.map(obj=>jsonFormatter(obj)).join(",");
+
+            } else {
+                errors.push("Can't process data");
+            }
+
+        }
+
+        return {
+            json:json,
+            errors:errors
+        };
+    }
+
+    function makeOverview() {
+        let
+            EXCLUDE=[ "diceroll" ],
+            SETTINGONLY = [ "setting-fantasy", "setting-grim", "setting-investigation", "setting-cyberpunk", "setting-japan", "setting-wildwest" ],
+            SETTINGONLYANDMAGIC = SETTINGONLY.concat([ "magic" ]),
+            ANYONLY = [ "ANY" ],
+            LIMITS = [
+                { tags:[ "adversary", "type" ], for:SETTINGONLY, amount:9 },
+                { tags:[ "adversary", "attack", "beastlike" ], for:SETTINGONLY, amount:10 },
+                { tags:[ "adversary", "attack", "humanlike" ], for:SETTINGONLY, amount:10 },
+                { tags:[ "adversary", "defense" ], for:SETTINGONLY, amount:10 },
+                { tags:[ "adversary", "description", "beastlike" ], for:SETTINGONLY, amount:11 },
+                { tags:[ "adversary", "description", "humanlike" ], for:SETTINGONLY, amount:11 },
+                { tags:[ "adversary", "adjective" ], for:SETTINGONLY, amount:10 },
+
+                { tags:[ "oracle", "festivity" ], for:SETTINGONLY, amount:3 },
+                { tags:[ "oracle", "requests" ], for:SETTINGONLY, amount:10 },
+                { tags:[ "oracle", "innocentperson" ], for:SETTINGONLY, amount:9 },
+                { tags:[ "oracle", "badperson" ], for:SETTINGONLY, amount:8 },
+                { tags:[ "oracle", "unprocessedfood" ], for:SETTINGONLY, amount:7 },
+                { tags:[ "oracle", "processedfood" ], for:SETTINGONLY, amount:5 },
+                { tags:[ "oracle", "uniqueprefix" ], for:SETTINGONLY, amount:7 },
+                { tags:[ "oracle", "meleeweapon" ], for:SETTINGONLY, amount:6 },
+                { tags:[ "oracle", "creature" ], for:SETTINGONLY, amount:8 },
+
+                { tags:[ "oracle", "drink" ], for:SETTINGONLY, amount:6 },
+                { tags:[ "oracle", "lifegoal" ], for:SETTINGONLY, amount:6 },
+                { tags:[ "oracle", "heavystuff" ], for:SETTINGONLY, amount:4 },
+                { tags:[ "oracle", "lightstuff" ], for:SETTINGONLY, amount:4 },
+                { tags:[ "oracle", "youfound" ], for:SETTINGONLY, amount:4 },
+                
+                { tags:[ "oracle", "multiple" ], for:ANYONLY, amount:8 },
+                { tags:[ "oracle", "bodypart" ], for:ANYONLY, amount:28 },
+                { tags:[ "oracle", "mineral" ], for:ANYONLY, amount:15 },
+                { tags:[ "oracle", "bodyfluid" ], for:ANYONLY, amount:10 },
+
+                { tags:[ "oracle", "poi" ], for:ANYONLY, amount:10 },
+                
+                { tags:[ "invalidating" ], for:SETTINGONLY, amount:1 },
+                { tags:[ "invalidating", "exhaust" ], for:SETTINGONLY, amount:2 },
+                
+                { tags:[ "deadlabel" ], for:SETTINGONLY, amount:3 },
+
+                { tags:[ "accessory", "noprice" ], for:SETTINGONLY, amount:3 },
+                { tags:[ "accessory", "noprice", "startingaccessory" ], for:SETTINGONLYANDMAGIC, amount:2 },
+                { tags:[ "accessory", "accessoryprice", "special" ], for:SETTINGONLY, amount:1 },
+
+                { tags:[ "accessory", "accessoryprice", "materialFair" ], for:SETTINGONLY, amount:8 },
+                { tags:[ "accessory", "accessoryprice", "materialCheap" ], for:SETTINGONLY, amount:6 },
+                { tags:[ "accessory", "accessoryprice", "materialVeryCheap" ], for:SETTINGONLY, amount:3 },
+
+                { tags:[ "accessory", "accessoryprice", "materialCheap", "startingaccessory" ], for:SETTINGONLY, amount:2 },
+                { tags:[ "accessory", "accessoryprice", "materialFair", "startingaccessory" ], for:SETTINGONLY, amount:1 },
+
+                { tags:[ "accessory", "accessoryprice", "toolCheap" ], for:SETTINGONLY, amount:3 },
+                { tags:[ "accessory", "accessoryprice", "toolFair" ], for:SETTINGONLY, amount:1 },
+                { tags:[ "accessory", "accessoryprice", "toolPricey" ], for:SETTINGONLYANDMAGIC, amount:1 },
+                { tags:[ "accessory", "accessoryprice", "any", "materialFair" ], for:ANYONLY, amount:1 },
+
+                { tags:[ "accessory", "accessoryprice", "toolCheap", "startingaccessory" ], for:SETTINGONLY, amount:2 },
+                { tags:[ "accessory", "accessoryprice", "toolFair", "startingaccessory" ], for:SETTINGONLY, amount:1 },
+                { tags:[ "accessory", "accessoryprice", "toolPricey", "startingaccessory" ], for:SETTINGONLY, amount:1 },
+
+                { tags:[ "animal", "animalCheap" ], for:SETTINGONLY, amount:2 },
+                { tags:[ "animal", "animalFair" ], for:SETTINGONLY, amount:1 },
+                { tags:[ "animal", "animalVeryCheap" ], for:SETTINGONLY, amount:1 },
+                { tags:[ "animal", "animalVeryPricey" ], for:SETTINGONLY, amount:1 },
+                { tags:[ "animal", "startingaccessory" ], for:SETTINGONLY, amount:2 },
+
+                { tags:[ "weapon", "improvised" ], for:ANYONLY, amount:1 },
+                { tags:[ "weapon", "unarmed" ], for:ANYONLY, amount:1 },
+
+                { tags:[ "weapon", "verylight", "weaponprice" ], for:SETTINGONLY, amount:1 },
+
+                { tags:[ "weapon", "light", "weaponprice" ], for:SETTINGONLY, amount:2 },
+                { tags:[ "weapon", "light", "startingweapon" ], for:SETTINGONLY, amount:4 },
+
+                { tags:[ "weapon", "medium", "startingweapon" ], for:SETTINGONLY, amount:1 },
+                { tags:[ "weapon", "medium", "weaponprice" ], for:SETTINGONLY, amount:4 },
+                { tags:[ "weapon", "medium", "weaponprice", "startingweapon" ], for:SETTINGONLY, amount:2 },
+
+                { tags:[ "weapon", "strong", "startingweapon" ], for:SETTINGONLY, amount:1 },
+                { tags:[ "weapon", "strong", "weaponprice" ], for:SETTINGONLY, amount:2 },
+                { tags:[ "weapon", "strong", "weaponprice", "startingweapon" ], for:SETTINGONLY, amount:1 },
+
+                { tags:[ "weapon", "strong", "weaponprice", "startingweapon" ], for:SETTINGONLY, amount:1 },
+
+                { tags:[ "weapon", "extreme", "weaponprice", "startingweapon" ], for:SETTINGONLY, amount:1 },
+
+                { tags:[ "ammo", "weaponprice" ], for:SETTINGONLY, amount:2 },
+                
+                { tags:[ "biome" ], for:SETTINGONLY, amount:5 },
+
+                { tags:[ "service", "extra" ], for:SETTINGONLY, amount:2 },
+
+                { tags:[ "magic", "name" ], for:SETTINGONLY, amount:1 },
+
+                { tags:[ "transport" ], for:ANYONLY, amount:1 },
+                { tags:[ "transport", "wagon" ], for:SETTINGONLY, amount:1 },
+
+                { tags:[ "darkmagic", "type" ], for:SETTINGONLY, amount:1 },
+                { tags:[ "lightmagic", "type" ], for:SETTINGONLY, amount:1 },
+
+                { tags:[ "map", "regionname" ], for:SETTINGONLY, amount:8 },
+                { tags:[ "map", "poiname" ], for:SETTINGONLY, amount:8 },
+                { tags:[ "map", "lakename" ], for:SETTINGONLY, amount:2 },
+                { tags:[ "map", "general", "regionname" ], for:ANYONLY, amount:1 },
+                { tags:[ "map", "general", "lakename" ], for:ANYONLY, amount:1 },
+                { tags:[ "map", "general", "poiname" ], for:ANYONLY, amount:1 },
+
+                { tags:[ "money", "name" ], for:SETTINGONLY, amount:1 },
+
+                { tags:[ "omen", "name" ], for:SETTINGONLY, amount:1 },
+                { tags:[ "ruler" ], for:SETTINGONLY, amount:3 },
+
+                { tags:[ "spell", "effect", "darkmagic", "normal" ], for:ANYONLY, amount:18 },
+                { tags:[ "spell", "effect", "lightmagic" ], for:ANYONLY, amount:21 },
+                { tags:[ "spell", "effect", "darkmagic", "evoke" ], for:SETTINGONLY, amount:1 },
+
+                // --- May grow?
+
+                { tags:[ "map", "layout" ], for:ANYONLY, amount:1 },
+                { tags:[ "basecapacity" ], for:ANYONLY, amount:1 },
+                { tags:[ "exhaustevent" ], for:ANYONLY, amount:1 },
+                { tags:[ "levelup" ], for:ANYONLY, amount:1 },
+                { tags:[ "player", "creation" ], for:ANYONLY, amount:1 },
+                { tags:[ "player", "hitpoints", "creationentry" ], for:ANYONLY, amount:1 },
+                { tags:[ "player", "test" ], for:ANYONLY, amount:1 },
+                { tags:[ "player", "capacity" ], for:ANYONLY, amount:1 },
+                { tags:[ "player", "abilities" ], for:ANYONLY, amount:1 },
+                { tags:[ "protection" ], for:ANYONLY, amount:1 },
+                { tags:[ "reaction" ], for:ANYONLY, amount:1 },
+                { tags:[ "rest", "shortrestaction" ], for:ANYONLY, amount:1 },
+                { tags:[ "time" ], for:ANYONLY, amount:1 },
+                { tags:[ "oracle", "evil" ], for:ANYONLY, amount:1 },
+                { tags:[ "critical" ], for:ANYONLY, amount:1 },
+                { tags:[ "spell", "name" ], for:ANYONLY, amount:5 },
+                { tags:[ "combatrules" ], for:ANYONLY, amount:1 },
+                { tags:[ "magic", "cast" ], for:ANYONLY, amount:1 },
+                { tags:[ "magic", "critfumble" ], for:ANYONLY, amount:1 },
+                { tags:[ "lightspell" ], for:ANYONLY, amount:1 },
+                { tags:[ "darkspell" ], for:ANYONLY, amount:1 },
+                { tags:[ "hitpointslabel" ], for:ANYONLY, amount:1 },
+                { tags:[ "initiative" ], for:ANYONLY, amount:1 },
+                { tags:[ "faction", "name" ], for:ANYONLY, amount:10 },
+                { tags:[ "fumble" ], for:ANYONLY, amount:1 },
+                { tags:[ "hierarchy", "group", "moraletriggers" ], for:ANYONLY, amount:1 },
+                { tags:[ "hierarchy", "leader", "moraletriggers" ], for:ANYONLY, amount:1 },
+                { tags:[ "morale", "adversaryattribute" ], for:ANYONLY, amount:1 },
+                { tags:[ "starting" ], for:ANYONLY, amount:1 },
+
+                { tags:[ "action", "attack", "melee" ], for:ANYONLY, amount:1 },
+                { tags:[ "action", "attack", "ranged" ], for:ANYONLY, amount:1 },
+                { tags:[ "action", "defence" ], for:ANYONLY, amount:1 },
+
+                { tags:[ "growth", "trigger" ], for:ANYONLY, amount:1},
+                { tags:[ "growth", "abilities" ], for:ANYONLY, amount:1},
+                { tags:[ "growth", "lifepoints" ], for:ANYONLY, amount:1},
+                { tags:[ "growth", "loot" ], for:ANYONLY, amount:1},
+
+                { tags:[ "stat", "stat-agility" ], for:ANYONLY, amount:1 },
+                { tags:[ "stat", "stat-presence" ], for:ANYONLY, amount:1 },
+                { tags:[ "stat", "stat-strength" ], for:ANYONLY, amount:1 },
+                { tags:[ "stat", "stat-toughness" ], for:ANYONLY, amount:1 },
+                { tags:[ "stat", "stat-intelligence" ], for:ANYONLY, amount:1 },
+                { tags:[ "stat", "stat-charisma" ], for:ANYONLY, amount:1 },
+
+                { tags:[ "rpgsystem" ], for:ANYONLY, amount:1 },
+
+                // --- SYSTEM
+
+                { tags:[ "adversary", "beastiaryentryaverage" ], for:ANYONLY, amount:4 },
+                { tags:[ "adversary", "beastiaryentrystrong" ], for:ANYONLY, amount:2 },
+                { tags:[ "adversary", "beastiaryentrytrained" ], for:ANYONLY, amount:2 },
+
+                { tags:[ "service", "basic" ], for:ANYONLY, amount:7 },
+                { tags:[ "armor" ], for:ANYONLY, amount:1 },
+                { tags:[ "adversary", "average", "name" ], for:ANYONLY, amount:1 },
+                { tags:[ "adversary", "strong", "name" ], for:ANYONLY, amount:2 },
+                { tags:[ "adversary", "trained", "name" ], for:ANYONLY, amount:2 },
+                { tags:[ "oracle", "region" ], for:ANYONLY, amount:5 },
+                { tags:[ "oracle", "lake" ], for:ANYONLY, amount:2 },
+                { tags:[ "season" ], for:ANYONLY, amount:4 },
+
+                { tags:[ "beastiary", "addendum" ], for:ANYONLY, amount:1 },
+
+                { tags:[ "hitpoints-simple" ], for:ANYONLY, amount:1 },
+                { tags:[ "extraitemstableentry" ], for:ANYONLY, amount:1 },
+                { tags:[ "transportation" ], for:ANYONLY, amount:1 },
+                { tags:[ "trait" ], for:ANYONLY, amount:1 },
+                { tags:[ "trait", "sociality" ], for:ANYONLY, amount:4 },
+                { tags:[ "optionalcreationentry" ], for:ANYONLY, amount:1 },
+                { tags:[ "faction", "data" ], for:ANYONLY, amount:1 },
+                { tags:[ "map", "poi" ], for:ANYONLY, amount:1 },
+                { tags:[ "map", "region" ], for:ANYONLY, amount:1 },
+                { tags:[ "map", "lake" ], for:ANYONLY, amount:1 },
+                { tags:[ "boot" ], for:ANYONLY, amount:1 },
+                { tags:[ "samplestat", "stat-agility-simple" ], for:ANYONLY, amount:6 },
+                { tags:[ "samplestat", "stat-presence-simple" ], for:ANYONLY, amount:5 },
+                { tags:[ "samplestat", "stat-charisma-simple" ], for:ANYONLY, amount:4 },
+                { tags:[ "samplestat", "stat-charisma-simple", "stat-presence-simple-1" ], for:ANYONLY, amount:1 },
+                { tags:[ "samplestat", "stat-strength-simple" ], for:ANYONLY, amount:4 },
+                { tags:[ "samplestat", "stat-intelligence-simple" ], for:ANYONLY, amount:1 },
+                { tags:[ "samplestat", "stat-intelligence-simple", "stat-presence-simple-1" ], for:ANYONLY, amount:2 },
+                { tags:[ "samplestat", "stat-toughness-simple" ], for:ANYONLY, amount:2 },
+                { tags:[ "rpgsetting", "single" ], for:ANYONLY, amount:SETTINGONLY.length },
+                { tags:[ "rpgsetting", "set" ], for:ANYONLY, amount:2 },
+                
+            ],
+            out = "<table><tr><td></td>",
+            sheet = { columns:[], rows:[], sets:[], values:{}, totals:{}, rowIndex:{} };
+
+        DATABASE.forEach(data=>{
+            let
+                rowKey,
+                isOk = true;
+                column = [],
+                row = [];
+
+            if (data.ifAnyFlag)
+                data.ifAnyFlag.forEach(set=>{
+                    set.forEach(flag=>{
+                        column.push(flag);
+                    })
+                });
+            else
+                column.push("ANY");
+
+            data.tags.forEach(tag=>{
+                row.push(tag);
+                if (EXCLUDE.indexOf(tag)!=-1)
+                    isOk = false;
+            });
+
+            if (isOk) {
+
+                column = column.join(",");
+                rowKey = row.join(",");
+
+                if (sheet.columns.indexOf(column) == -1) {
+                    sheet.columns.push(column);
+                    sheet.values[column] = {};
+                    sheet.sets[column] = {};
+                }
+                if (sheet.rows.indexOf(rowKey) == -1) {
+                    sheet.rows.push(rowKey);
+                    sheet.totals[rowKey] = 0;
+                }
+                
+                if (!sheet.values[column][rowKey]) {
+                    sheet.values[column][rowKey] = 0;
+                    sheet.sets[column][rowKey] = [];
+                }
+
+                sheet.values[column][row]++;
+                sheet.sets[column][row].push(data);
+                sheet.totals[row]++;
+                sheet.rowIndex[rowKey] = row;
+
+            }
+
+        });
+
+        sheet.rows.sort((a,b)=>{
+            if (sheet.totals[a] < sheet.totals[b])
+                return 1;
+            else if (sheet.totals[a] > sheet.totals[b])
+                return -1;
+            else
+            if (a>b)
+                return 1;
+            else if (a<b)
+                return -1;
+            else
+                return 0;
+        });
+
+
+        sheet.columns.forEach(column=>{
+            out+="<td>"+column+"</td>";
+        })
+        out+="</tr>";
+
+        let
+            errorsCount = 0;
+
+        sheet.rows.forEach(row=>{
+            let
+                allColumns = 0,
+                superColumns = 0,
+                overColumns = 0,
+                underColumns = 0,
+                untrackedColumns = 0,
+                errorSymbol = "",
+                errorAlt = "",
+                rowHtml = "",
+                rowData = sheet.rowIndex[row],
+                rowLimit,
+                limitAmount;
+
+            LIMITS.forEach(limit=>{
+                let
+                    isOk = true;
+
+                limit.tags.forEach(tag=>{
+                    if (rowData.indexOf(tag)==-1)
+                        isOk = false;
+                });
+
+                if (isOk) {
+                    rowLimit = limit;
+                    limitAmount = limit.amount;
+                }
+            })
+
+            sheet.columns.forEach(column=>{
+                let
+                    isColumn,
+                    value = sheet.values[column][row] || 0,
+                    isUnder = rowLimit && (value<limitAmount),
+                    isOver = rowLimit && (value>limitAmount),
+                    isSuper = rowLimit && (value>=limitAmount*1.5);
+
+                if (value)
+                    allColumns++;
+                if (isOver)
+                    overColumns++;
+                if (isSuper)
+                    superColumns++;
+
+                if (rowLimit && (rowLimit.for.indexOf(column) != -1)) {
+                    isColumn = true;
+                }
+
+                if (rowLimit) {
+                    if (isColumn)
+                        if (isUnder) {
+                            underColumns++;
+                            rowHtml+="<td style='background-color:red;color:white'>"+value+" <span style='font-size:10px'>(-"+(limitAmount-value)+")</span></td>";
+                        } else
+                            rowHtml+="<td style='background-color:green'>"+value+(value>limitAmount ? " <span style='font-size:10px'>(+"+(value-limitAmount)+")</span>" : "")+(isSuper ? " &#129751;" : "")+"</td>";
+                    else if (value) {
+                        untrackedColumns++;
+                        rowHtml+="<td style='background-color:red;color:white'>"+value+"</td>";
+                        console.warn("Untracked",column,",",row,"=",sheet.sets[column][row]);
+                    } else {
+                        rowHtml+="<td></td>";
+                    }
+                } else {
+                    if (value)
+                        rowHtml+="<td>"+value+"</td>";
+                    else
+                        rowHtml+="<td></td>";
+                }
+            })
+
+            if (rowLimit) {
+                if (untrackedColumns) {
+                    errorSymbol = "&#128269;";
+                    errorAlt = "Untracked data";
+                } else if (underColumns) {
+                    errorSymbol = "&#127964;";
+                    errorAlt = "Missing entries";
+                } else if (allColumns == overColumns) {
+                    errorSymbol = "&#129751; <span style='font-size:10px'>("+limitAmount+")</span>";
+                    errorAlt = "All columns are spilling. Raise the check limit.";
+                }
+            } else {
+                errorSymbol = "&#128220;";
+                errorAlt = "Missing check for this row.";
+            }
+
+            if (errorSymbol) {
+                rowHtml = "<td style='background-color:red;color:white' title='"+errorAlt+"'><b>"+row+"</b> "+errorSymbol+"</td>"+rowHtml;
+                errorsCount++;
+            } else
+                rowHtml="<td>"+row+"</td>"+rowHtml;
+
+            out+="<tr>"+rowHtml+"</tr>";
+        })
+
+        out+="</table>";
+
+        if (errorsCount) {
+            out = "<div style='padding:5px;margin:5px 0;background-color:#f00;color:#fff'>"+errorsCount+" error(s)</div>"+out;
+        } else {
+            out = "<div style='padding:5px;margin:5px 0;background-color:green;color:#fff'>Everything looks OK!</div>"+out;
+        }
+
+        return out;
+
+    }
+
+    function makeGraphViz(DATABASE) {
+        let
+            errors = [],
+            links = [],
+            pool = 0,
+            oneOf = 0,
+            cache = {},
+            found = {},
+            settings = {};
+
+        function filterId(id) {
+            return !id.startsWith("roll-") &&!id.startsWith("stat-")
+        }
+
+        function filterDatabaseByTags(caller, tags,except) {
+            return DATABASE.filter(entry=>{
+                if (!except || (except.indexOf(entry) == -1)) {
+                    let
+                        found = true;
+                    tags.forEach(tag=>{
+                        if (!entry.tags || (entry.tags.indexOf(tag) == -1))
+                            found = false;
+                    })
+                    return found;
+                }
+            })
+        }
+
+        function formatId(id) {
+            return id.replace(/-[0-9]*$/,"-*");
+        }
+
+        function addConnection(from,to,details) {
+            let
+                uid = from+"*"+to;
+
+            if (!cache[uid]) {
+                links.push([from,to,details]);
+                cache[uid] = true;
+            }
+
+            found[from] = true;
+            found[to] = true;
+        }
+
+        DATABASE.forEach(element=>{
+            let
+                id = formatId(element.id);
+            if (filterId(id))
+                if (element.requires)
+                    element.requires.forEach(requirement=>{
+                        if (requirement.ofTags)
+                            requirement.ofTags.forEach(set=>{
+                                let
+                                    count = 0,
+                                    entries = filterDatabaseByTags(0, set);
+
+                                if (entries.length > 1) {
+                                    let
+                                        oneOfId = requirement.id+"-"+(requirement.times ? "x"+requirement.times : "x1");//+"-"+(oneOf++);
+                                    addConnection(id,oneOfId,[]);
+                                    entries.forEach(entry=>{
+                                        if (filterId(entry.id)) {
+                                            addConnection(formatId(entry.id),oneOfId,[]);
+                                            count++;
+                                        }
+                                    })
+                                    settings[oneOfId] = [["shape","tab"],["style","filled"],["fontcolor","white"],["color",count > 1 ? "green" : "red"]];
+                                } else {
+                                    entries.forEach(entry=>{
+                                        if (filterId(entry.id)) {
+                                            addConnection(id,formatId(entry.id),[["color","\"red\""]]);
+                                            count++;
+                                        }
+                                    })
+                                }
+                            })
+                        if (requirement.ofTagBags) {
+
+                            requirement.ofTagBags.forEach(set=>{
+                                let
+                                    count = 0,
+                                    entries = filterDatabaseByTags(0, set),
+                                    times = requirement.times || 1;
+
+                                if (entries.length > 1) {
+                                        let
+                                            oneOfId = requirement.id+"-"+(requirement.times ? "x"+requirement.times : "x1");//+"-"+(oneOf++);
+                                        addConnection(id,oneOfId,[]);
+                                        entries.forEach(entry=>{
+                                            if (filterId(entry.id)) {
+                                                addConnection(formatId(entry.id),oneOfId,[]);
+                                                count++;
+                                            }
+                                        })
+                                        settings[oneOfId] = [["shape","invhouse"],["style","filled"],["fontcolor","white"],["color",count > times ? "green" : "red"]];
+                                    } else {
+                                        entries.forEach(entry=>{
+                                            if (filterId(entry.id)) {
+                                                addConnection(id,formatId(entry.id),[["color","\"orange\""]]);
+                                                count++;
+                                            }
+                                        })
+                                    }
+                            });
+                        }
+                    })
+        })
+
+        DATABASE.forEach(element=>{
+            let
+                id = formatId(element.id);
+            if (filterId(id) && !found[id]) {
+                errors.push("Can't place in graph due to no references: "+element.id);
+            }
+        });
+
+        out="";
+
+        for (let k in settings) {
+            out+="\t\""+k+"\" [";
+            settings[k].forEach(pair=>out+=pair[0]+"="+pair[1]+",");
+            out=out.substr(0,out.length-1)+"];\n";
+        }
+
+        links.forEach(link=>{
+            out+="\t\""+link[0]+"\" -> \""+link[1]+"\"";
+            if (link[2].length) {
+                out+=" [";
+                link[2].forEach(pair=>out+=pair[0]+"="+pair[1]+",");
+                out=out.substr(0,out.length-1)+"];";
+            }
+            out+="\n";
+        })
+
+        return {
+            errors:errors,
+            text:"digraph G {\n\tlayout=twopi\n\tranksep=6;\n\tratio=auto;\n\n"+out+"}"
+        };
+    }
+
+    function performDataCleanCheck() {
+        let
+            SENTENCES_WHITELIST = [
+                /^God Toughness$/,
+                /^Its presence presses against the mind.$/,
+                /toughnessStat/g,
+                /strengthStat/g,
+            ],
+            infos = { virtualStats:{} },
+            errors = [];
+
+        function isSentenceWhitelisted(s) {
+            let
+                isOk = false;
+            SENTENCES_WHITELIST.forEach(reg=>{
+                if (s.match(reg)) {
+                    isOk = true;
+                }
+            })
+            return isOk;
+        }
+
+        function find(n,root) {
+            for (let k in n) {
+                if (typeof n[k] == "string") {
+                    if (
+                        (n[k].match(/d[0-9]/)) &&
+                        !root.startsWith("roll-") &&
+                        !(root.endsWith(".ofTags.0") && (k==2))
+                    ) {
+                        errors.push("Dice roll found in text. Use dicerolls instead. ("+root+") "+k+" = "+n[k]);
+                    } else if (
+                        k!="id" &&
+                        !isSentenceWhitelisted(n[k]) &&
+                        !n[k].startsWith("samplestat-") && (
+                            (n[k].match(/strength/i) ||
+                            n[k].match(/agility/i) ||
+                            n[k].match(/presence/i) ||
+                            n[k].match(/toughness/i)) &&
+                            !root.startsWith("stat-") &&
+                            !n[k].startsWith("stat-") &&
+                            !n[k].startsWith("$.") &&
+                            !n[k].match(/agilityStat/)
+                        )
+                    ) {
+                        errors.push("Stat name found in text. Use placeholders instead. ("+root+") "+k+" = "+n[k]);
+                    } else if (
+                        n[k].match(/dr[ 0-9]+/i)
+                    ) {
+                        errors.push("("+root+") "+k+" = "+n[k]);
+                    }
+                } else if (typeof n[k] == "object") {
+                    if (k == "requires") {
+                        n[k].forEach(request=>{
+                            let
+                                isStatReference = !n.id.startsWith("statset-") && ((request.id.substr(0,2)!="$.") && (request.id.endsWith("Stat") || (request.ofTags && request.ofTags[0][0].indexOf("stat")!=-1) || (request.ofTagBags && request.ofTagBags[0][0].indexOf("stat")!=-1)));
+
+                            if (isStatReference) {
+                                if (!request.reuse) {
+                                    errors.push("Missing reuse in stat request ("+root+") "+k+" = "+JSON.stringify(n[k]));
+                                }
+                                if (!request.ofTags) {
+                                    errors.push("Missing ofTags in stat request ("+root+") "+k+" = "+JSON.stringify(n[k]));
+                                } else {
+                                    let
+                                        requestedStat = 0,
+                                        foundComponents = {};
+                                    request.ofTags.forEach(request=>{
+                                        if (request.length == 1) {
+                                            let
+                                                parts = request[0].split("-");
+                                            if ((parts.length == 2) || (parts.length == 3) || (parts.length == 4)) {
+                                                let
+                                                    component = (parts[2] || "base")+(parts[3] || "-base");
+                                                if (!requestedStat)
+                                                    requestedStat = parts[1];
+                                                if (!parts[component]) {
+                                                    foundComponents[component] = true;
+                                                } else {
+                                                    errors.push("Duplicated stat request tag "+component+" ("+root+") "+k+" = "+JSON.stringify(n[k]));        
+                                                }
+                                            } else {
+                                                errors.push("Invalid stat part name "+request[0]+" ("+parts.length+") in tags ("+root+") "+k+" = "+JSON.stringify(n[k]));    
+                                            }
+                                        } else {
+                                            errors.push("Invalid stat request tag length ("+root+") "+k+" = "+JSON.stringify(n[k]));
+                                        }
+                                    })
+                                    if (!foundComponents["base-base"]) {
+                                        errors.push("Missing base stat tag ("+root+") "+k+" = "+JSON.stringify(n[k]));
+                                    }
+                                    if (!foundComponents["simple-base"]) {
+                                        errors.push("Missing simple stat tag ("+root+") "+k+" = "+JSON.stringify(n[k]));
+                                    }
+                                    if (!foundComponents["simplealt"]) {
+                                        errors.push("Missing simple-alt stat tag ("+root+") "+k+" = "+JSON.stringify(n[k]));
+                                    }
+                                    if (request.id!=(requestedStat+"Stat")) {
+                                        errors.push("Bad stat request ID ("+root+") "+k+" = "+JSON.stringify(n[k]));
+                                    }
+                                    if (!infos.virtualStats[requestedStat])
+                                        infos.virtualStats[requestedStat] = 0;
+                                    infos.virtualStats[requestedStat]++;
+                                }
+                            }
+                            // { id: "agilityStat", reuse: true, ofTags: [ [ "stat-agility" ], [ "stat-agility-simple" ], [ "stat-agility-simple-alt" ] ] }
+
+                        })
+                    }
+                    find(n[k],root+"."+k);
+                } else if (typeof n[k] == "function") {
+                    if (
+                        !root.startsWith("roll-")
+                    ) {
+                        errors.push("JS function found. Even if supported, avoid using them. ("+root+") "+k+" = [CODE]");
+                    }
+                }
+            }
+        }
+
+        DATABASE.forEach(entry=>{
+            find(entry,entry.id);
+            if (!entry.tags)
+                errors.push("Missing tags for: "+entry.id);
+        })
+
+        return {
+            infos:infos,
+            errors:errors
+        };
+        
+    }
+
+    function makeStatsMap() {
+        let
+            errors = [],
+            columns = [],
+            map = {},
+            summary = {},
+            samples = {};
+            
+        DATABASE.forEach(entry=>{
+            if (entry.id.startsWith("samplestat-")) {
+                entry.tags.forEach(tag=>{
+                    if (tag!="samplestat") {
+                        let
+                            parts = tag.split("-"),
+                            statid = "stat-"+parts[1]+"-simple",
+                            name = entry.render.EN,
+                            id = parts[3] || 0;
+
+                        if (entry.tags.length>2)
+                            name="<u>"+name+"</u>";
+
+                        if (!samples[statid])
+                            samples[statid] = [];
+                        if (!samples[statid][id])
+                            samples[statid][id] = [];
+                        samples[statid][id].push(name);
+                    }
+                })
+            }
+            if (entry.id.startsWith("stat-")) {
+                if (!map[entry.id]) {
+                    map[entry.id] = {};
+                }
+                entry.tags.forEach(tag=>{
+                    if ((tag!="stat") && (tag!="burden-affected")) {
+                        let
+                            section,
+                            parts = tag.split("-"),
+                            linkedStat = "stat-"+parts[1];
+
+                        if (columns.indexOf(linkedStat)==-1)
+                            columns.push(linkedStat);
+
+                        if (!summary[linkedStat])
+                            summary[linkedStat] = {};
+
+                        switch (parts.length) {
+                            case 2:{
+                                section = "base";
+                                if (map[entry.id][linkedStat]) {
+                                    console.warn("Duplicate base stat", tag, entry);
+                                } else {
+                                    map[entry.id][linkedStat] = section;
+                                }
+                                break
+                            }
+                            case 3:{
+                                if (parts[2] == "simple") {
+                                    section = "simple";
+                                    if (map[entry.id][linkedStat]) {
+                                        console.warn("Duplicate simple stat", tag, entry);
+                                    } else {
+                                        map[entry.id][linkedStat] = section;
+                                    }
+                                } else {
+                                    console.warn("Bad tag in stat entry", tag, entry);
+                                }
+                                break;
+                            }
+                            case 4:{
+                                if ((parts[2] == "simple") && (parts[3]=="alt")) {
+                                    section = "alt";
+                                    if (map[entry.id][linkedStat]) {
+                                        console.warn("Duplicate simple-alt stat", entry);
+                                    } else {
+                                        if ((entry.id!="stat-strength-simple") && (entry.id!="stat-agility-simple"))
+                                            errors.push("Stat "+entry.id+" cannot be ALT. Only stat-strength-simple and stat-agility-simple");
+                                        map[entry.id][linkedStat] = section;
+                                    }
+                                } else {
+                                    console.warn("Bad tag in stat-alt entry", tag, entry);
+                                }
+                                break;
+                            }
+                            default:{
+                                console.warn("Bad tag in stat entry", tag, entry);
+                            }
+                        }
+                    
+                        if (section)
+                            if (summary[linkedStat][section]) {
+                                errors.push("Duplicate "+section+" for stat "+linkedStat);
+                            } else
+                                summary[linkedStat][section] = entry.id;
+                    }
+                })
+            }
+        })
+
+        for (let k in summary) {
+            if ((k=="stat-strength")||(k=="stat-agility")) {
+                if (!summary[k].base) {
+                    summary[k].error = true;
+                    errors.push("Missing base stat for "+k);
+                }
+                if (summary[k].simple) {
+                    summary[k].error = true;
+                    errors.push("Can't have simple stat for "+k);
+                }
+                if (summary[k].alt) {
+                    summary[k].error = true;
+                    errors.push("Can't have simple-alt stat for "+k);
+                }
+            } else {
+                /*
+                if (!summary[k].base) {
+                    summary[k].error = true;
+                    errors.push("Missing base stat for "+k);
+                }
+                if (!summary[k].simple) {
+                    summary[k].error = true;
+                    errors.push("Missing simple stat for "+k);
+                }
+                if (!summary[k].alt) {
+                    summary[k].error = true;
+                    errors.push("Missing simple-alt stat for "+k);
+                } else if ((summary[k].alt!="stat-strength-simple") && (summary[k].alt!="stat-agility-simple")) {
+                    summary[k].error = true;
+                    errors.push("Invalid simple-alt stat. Must be stat-strength-simple or stat-agility-simple. "+k);
+
+                }
+                */
+               if (!summary[k].alt) {
+                    summary[k].error = true;
+                    errors.push("Missing simple-alt stat for "+k);
+                }
+            }
+        }
+            
+        return {
+            samples:samples,
+            summary:summary,
+            columns:columns,
+            errors:errors,
+            map: map
+        }
+    }
+
+    let
+        tools = document.createElement("tools"),
+        exporter = document.createElement("span"),
+        importer = document.createElement("span"),
+        hr1 = document.createElement("hr"),
+        hr2 = document.createElement("hr"),
+        hr3 = document.createElement("hr"),
+        ui = document.createElement("div");
+
+    tools.innerHTML="Tools: ";
+    exporter.innerHTML="Export: ";
+    importer.innerHTML="Import: ";
+    document.body.appendChild(tools);
+    document.body.appendChild(hr1);
+    document.body.appendChild(exporter);
+    document.body.appendChild(hr2);
+    document.body.appendChild(importer);
+    document.body.appendChild(hr3);
+    document.body.appendChild(ui);
+
+    for (let k in TOOLS) {
+        let
+            button = document.createElement("button");
+
+        button.onclick = ()=>{
+            ui.innerHTML = "";
+            TOOLS[k](ui);
+        }
+
+        button.innerHTML = k;
+        tools.appendChild(button);
+    }
+
+    for (let k in DATASETS) {
+        let
+            exportbutton = document.createElement("button"),
+            importbutton = document.createElement("button");
+
+        importbutton.innerHTML = exportbutton.innerHTML = k;
+        exportbutton.onclick=(cl)=>{
+            let
+                title = document.createElement("h1"),
+                ta = document.createElement("textarea");
+
+            ta.cols = 100;
+            ta.rows = 30;
+            ui.innerHTML = "";
+            title.innerHTML = "Export "+k;
+            ui.appendChild(title);
+            ta.value = exportDataset(DATASETS[k]);
+            ui.appendChild(ta);
+
+        }
+
+        importbutton.onclick=(cl)=>{
+            let
+                title = document.createElement("h1"),
+                p = document.createElement("p"),
+                err = document.createElement("div"),
+                ta = document.createElement("textarea"),
+                hr = document.createElement("hr"),
+                bu = document.createElement("button");
+
+            ta.cols = 100;
+            ta.rows = 30;
+            err.style.backgroundColor="#f00";
+            err.style.color="#fff";
+            ui.innerHTML = "";
+            bu.innerHTML = title.innerHTML = "Import "+k;
+            p.innerHTML = DATASETS[k].import.notes;
+            ui.appendChild(title);
+            ui.appendChild(p);
+            ui.appendChild(ta);
+            ui.appendChild(hr);
+            ui.appendChild(err);
+            ui.appendChild(bu);
+            bu.onclick=()=>{
+                let
+                    result = importDataset(DATASETS[k], ta.value);
+                err.innerHTML = result.errors.join("<br>");
+                ta.value = result.json;
+            }
+
+        }
+        
+        exporter.appendChild(exportbutton);
+        importer.appendChild(importbutton);
+    }
+
+    TOOLS.overview(ui);
+
+}
+
+
+</script></html>
