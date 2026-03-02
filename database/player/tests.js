@@ -34,7 +34,7 @@ DATABASE = (window.DATABASE || []).concat([
         ]
     },
     render:{
-        EN:"[:block:]\n\n**Tests are made against a difficulty rating.** To succeed roll {$.testDiceroll} +/- your ability with a result equal to or greater than the {symbol()}. Creatures don't use abilities, they just roll a {$.testDiceroll} against {symbol()}.\n[:endblock:]\n[:tablehead:]Difficulty ratings ({symbol()})[:endtablehead:]\n{$.testDiceroll.createTestTable(resultTable)}"
+        EN:"[:block:]\n\n**Tests are made against a difficulty rating.** To succeed roll {$.testDiceroll} +/- your ability with a result equal to or greater than the {symbol()}. Creatures don't use abilities, they just roll a {$.testDiceroll} against {symbol()}.\n[:endblock:]\n[:tablehead:]Difficulty ratings ({symbol()})[:endtablehead:]\n{$.testDiceroll.createTestTable(\"test\",resultTable)}"
     }
 },
 ]);

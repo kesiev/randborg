@@ -845,6 +845,7 @@ let Builder = function(metadata, seed, language) {
             solveInstance(caller, instance);
             return {
                 globals:GLOBALS,
+                seed:seed,
                 language:language,
                 flags:flags,
                 instance:instance,

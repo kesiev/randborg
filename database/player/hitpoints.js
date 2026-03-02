@@ -217,7 +217,7 @@ DATABASE = (window.DATABASE || []).concat([
 
     },
     render:{
-        EN:"# {$.capital($.hitpointsLabel.getFullName())}\n[:block:]\nBegin with {$.baseHitpoints} + {$.largeHitpointsDiceroll}. In worst case 1{$.hitpointsLabel.getShortName()}, but never less.\n\n**Zero {$.hitpointsLabel.getShortName()}:** {$.exhaustLabel.getFullName()} **Negative {$.hitpointsLabel.getShortName()}:** {$.deadLabel.getFullName()}\n[:endblock:]\n{$.exhaustEvent}"
+        EN:"# {$.capital($.hitpointsLabel.getFullName())}\n[:block:]\n\nBegin with {$.baseHitpoints} + {$.largeHitpointsDiceroll}. In worst case 1{$.hitpointsLabel.getShortName()}, but never less.\n\n**Zero {$.hitpointsLabel.getShortName()}:** {$.exhaustLabel.getFullName()} **Negative {$.hitpointsLabel.getShortName()}:** {$.deadLabel.getFullName()}\n[:endblock:]\n{$.exhaustEvent}"
     }
 },
 ]);

@@ -14,7 +14,7 @@ DATABASE = (window.DATABASE || []).concat([
     ],
 	methods:{
         rollTable:{
-            EN:"[::]\n## Equipment ({allCounter}/{allCount})\n[:tablehead:]{diceroll}[:endtablehead:]\n{diceroll.createRangeTableForTag(this,\"startingaccessory\")}"
+            EN:"[::]\n## Equipment ({allCounter}/{allCount})\n[:tablehead:]{diceroll}[:endtablehead:]\n{diceroll.createRangeTableForTag(\"startingequipment\",this,\"startingaccessory\")}"
         }
     }
 },{
@@ -44,12 +44,14 @@ let
     ITEMS = [
 {
 	isStarting: true,
+	isScroll:true,
 	ifAnyFlag: [ [ "magic" ] ],
 	result: {
 		EN: "Random {$.magic.darkMean()}"
 	}
 },{
 	isStarting: true,
+	isScroll:true,
 	ifAnyFlag: [ [ "magic" ] ],
 	result: {
 		EN: "Random {$.magic.lightMean()}"
@@ -1403,6 +1405,9 @@ ITEMS.forEach((item,id)=>{
 
     if (item.isStarting)
         tags.push("startingaccessory");
+
+	if (item.isStarting && item.isScroll)
+		tags.push("isstartingscroll");
 
     if (!item.ifAnyFlag)
         tags.push("any");

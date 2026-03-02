@@ -344,6 +344,7 @@ function onl() {
                     simpleTable:[
                         { id:"ifAnyFlag", macro:"ifAnyFlag", type:"string" },
                         { id:"isStarting", macro:"findTag", tag:"startingaccessory", type:"lazyboolean" },
+                        { id:"isScroll", macro:"findTag", tag:"isstartingscroll", type:"lazyboolean" },
                         { id:"price", macro:"requireFind", find:"getPrice", type:"lazystring" },
                         { id:"requires", macro:"requireExclude", exclude:[ "getPrice" ], type:"json" },
                         { id:"value", data:"render.EN", type:"string" }
@@ -353,6 +354,7 @@ function onl() {
                     notes:"For database/items/accessories.js",
                     structure:{
                         isStarting:{ _PUTHERE:"column", id:"isStarting" },
+                        isScroll:{ _PUTHERE:"column", id:"isScroll" },
                         ifAnyFlag: [ { _PUTHERE:"column", id:"ifAnyFlag" } ],
                         requires:{ _PUTHERE:"column", id:"requires" },
                         price: { _PUTHERE:"column", id:"price" },
@@ -761,7 +763,12 @@ function onl() {
                     status.bar.innerHTML = "Seed "+status.seed+" ("+status.cyclesToGo+" tests to go)...";
 
                     let
-                        builder = new Builder(DATABASE, status.seed);
+                        builder = new Builder({
+                            projectName: "ProjectName",
+                            projectLicense: "License",
+                            projectAuthor: "Author",
+                            projectUrls: "https://foo.bar - https://foo.bar/2"
+                        }, status.seed);
 
                     builder.initialize(()=>{
                         let
@@ -1371,7 +1378,8 @@ function onl() {
         let
             EXCLUDE=[ "diceroll" ],
             SETTINGONLY = [ "setting-fantasy", "setting-grim", "setting-investigation", "setting-cyberpunk", "setting-japan", "setting-wildwest" ],
-            SETTINGONLYANDMAGIC = SETTINGONLY.concat([ "magic" ]),
+            MAGICONLY = [ "magic" ],
+            SETTINGONLYANDMAGIC = SETTINGONLY.concat(MAGICONLY),
             ANYONLY = [ "ANY" ],
             LIMITS = [
                 { tags:[ "adversary", "type" ], for:SETTINGONLY, amount:9 },
@@ -1411,7 +1419,8 @@ function onl() {
                 { tags:[ "deadlabel" ], for:SETTINGONLY, amount:3 },
 
                 { tags:[ "accessory", "noprice" ], for:SETTINGONLY, amount:3 },
-                { tags:[ "accessory", "noprice", "startingaccessory" ], for:SETTINGONLYANDMAGIC, amount:2 },
+                { tags:[ "accessory", "noprice", "startingaccessory" ], for:SETTINGONLY, amount:2 },
+                { tags:[ "accessory", "noprice", "startingaccessory", "isstartingscroll" ], for:MAGICONLY, amount:2 },
                 { tags:[ "accessory", "accessoryprice", "special" ], for:SETTINGONLY, amount:1 },
 
                 { tags:[ "accessory", "accessoryprice", "materialFair" ], for:SETTINGONLY, amount:8 },

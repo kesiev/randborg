@@ -1,6 +1,5 @@
 
 function NameGenerator(lang) {
-
  
     let
         language = NameGenerator.LANGUAGES[lang],
@@ -164,6 +163,13 @@ NameGenerator.NAMES = {
             versions:[
                 [ 0, 1 ],
                 [ 0, 1, 2]
+            ],
+            set:"base"
+        },
+        Player:{
+            versions:[
+                [ 0, 1 ],
+                [ 0, 2 ]
             ],
             set:"base"
         },

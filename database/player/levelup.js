@@ -27,7 +27,7 @@ DATABASE = (window.DATABASE || []).concat([
             { weight:3, result:{ EN:"Nothing" } }
         ],
         onLevelUp:{
-            EN:"## {youfound()}\n\n[:tablehead:]Loot ({diceroll})[:endtablehead:]\n{diceroll.createRangeTableForTagCall(0,\"leveluplootentry\",\"getLevelUpLootEntries\")}"
+            EN:"## {youfound()}\n\n[:tablehead:]Loot ({diceroll})[:endtablehead:]\n{diceroll.createRangeTableForTagCall(\"leveluploot\",0,\"leveluplootentry\",\"getLevelUpLootEntries\")}"
         }
     }
 },

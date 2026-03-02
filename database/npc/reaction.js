@@ -32,7 +32,7 @@ DATABASE = (window.DATABASE || []).concat([
         ]
     },
     render:{
-        EN:"[:block:]\n{intro()}\n[:endblock:]\n[:tablehead:]Reaction ({diceroll})[:endtablehead:]\n{diceroll.createRangeTable(resultTable)}"
+        EN:"[:block:]\n{intro()}\n[:endblock:]\n[:tablehead:]Reaction ({diceroll})[:endtablehead:]\n{diceroll.createRangeTable(\"reaction\",resultTable)}"
     }
 },
 ]);

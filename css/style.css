@@ -85,6 +85,96 @@ BODY {
   color:#f00;
 }
 
+.charactersheet {
+  width: 40%;
+  margin: auto;
+}
+
+.characterroller {
+  transition: 0.1s all;
+  font-family: monospace;
+  font-size: 14px;
+  text-align: center;
+  margin:20px 0;
+  height:140px;
+  line-height: 190px;
+  width:50%;
+  margin: 30px auto 20px auto;
+  background-image: url(../database/extrapages/roll.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer;
+  transform: rotate(-5deg);
+  user-select: none;
+}
+
+.characterroller:hover {
+  transform: rotate(5deg);
+}
+
+.characterroller .text {
+  color:#000;
+  background-color: #fff;
+  padding:3px;
+  box-shadow: 0px 1px 1px #000;
+}
+
+.sheetsegmentedbar, .sheetbar, .sheetboxes {
+  font-family: seshat;
+  font-size: 16px;
+  color: #fff;
+  border-top: 1px solid #fff;
+}
+
+.sheetsegmentedbar, .sheetbar {
+  padding:15px 0;
+}
+
+.sheetbar {
+  text-align: center;
+}
+
+.sheetkey {
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.sheetsegmentedbar, .sheetboxes {
+  display: flex;
+}
+
+.sheetsegmentedbar .sheetitem, .sheetboxes .sheetitem {
+  flex-grow: 1;
+}
+
+.sheetboxes .sheetitem {
+  padding:15px;
+  width: 50%;
+}
+
+.sheetboxes .sheetitem:first-child {
+  border-right: 1px solid #fff;
+}
+
+.sheetboxes .sheetvalueitem {
+  padding:3px 0;
+}
+
+.sheetboxes .sheetheader {
+  font-family: ferrum;
+  display: inline-block;
+  background-color: #fff;
+  color:#000;
+  padding:10px 2px;
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 2px 2px 1px #000;
+  transform:rotate(-2deg);
+}
+
 @counter-style crosses {
   system: cyclic;
   symbols: "\2715";
@@ -109,6 +199,21 @@ BODY {
   suffix: " ";
 }
 
+@media (max-width: 1300px) {
+
+  .charactersheet {
+    width:70%;
+  }
+}
+
+@media (max-width: 1100px) {
+
+  .charactersheet {
+    width: 100%;
+  }
+}
+
+
 @media (max-width: 600px) {
   .bar .logo {
     top:45px;
@@ -118,4 +223,28 @@ BODY {
   .footer {
     font-size: 12px;
   }
+
+  .sheetsegmentedbar, .sheetboxes {
+    flex-direction: column;
+  }
+
+  .sheetsegmentedbar .sheetitem {
+    text-align: center;
+    margin:5px 0;
+  }
+
+  .sheetboxes .sheetitem {
+    width: auto;
+  }
+
+  .sheetboxes .sheetitem:first-child {
+    border-right: 0;
+    border-bottom: 1px solid #fff;
+  }
+
+  .characterroller {
+    margin: 50px auto 20px auto;
+  }
+
+
 }

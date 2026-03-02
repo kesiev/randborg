@@ -21,7 +21,7 @@ DATABASE = (window.DATABASE || []).concat([
             } }
         ],
         rollTable:{
-            EN:"[:tablehead:]{diceroll}[:endtablehead:]\n{diceroll.createRangeTableForTag(this,\"startingtransport\")}"
+            EN:"[:tablehead:]{diceroll}[:endtablehead:]\n{diceroll.createRangeTableForTag(\"startingtransport\",this,\"startingtransport\")}"
         }
     }
 }

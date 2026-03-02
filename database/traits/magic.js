@@ -85,7 +85,7 @@ DATABASE = (window.DATABASE || []).concat([
         ]
     },
     render:{
-        EN:"# {$.magicName.section()}\n[:block:]\n\n{$.magicName.lore()}\n\n{cast}\n\n{critFumble}\n\n{$.capital($.magicName.means())} will never work when {$.makeCallListOf(0,\"magicexception\",\"getException\")}.\n[:endblock:]\n[::]\n## {lightMagicType.section()}\n\n[:tablehead:]{lightMagicType.section()} ({spellLightDiceroll})[:endtablehead:]\n{spellLightDiceroll.createRangeTableForTag(0,\"lightspell\")}\n[::]\n## {darkMagicType.section()}\n\n[:tablehead:]{darkMagicType.section()} ({spellDarkDiceroll})[:endtablehead:]\n{spellDarkDiceroll.createRangeTableForTag(0,\"darkspell\")}"
+        EN:"# {$.magicName.section()}\n[:block:]\n\n{$.magicName.lore()}\n\n{cast}\n\n{critFumble}\n\n{$.capital($.magicName.means())} will never work when {$.makeCallListOf(0,\"magicexception\",\"getException\")}.\n[:endblock:]\n[::]\n## {lightMagicType.section()}\n\n[:tablehead:]{lightMagicType.section()} ({spellLightDiceroll})[:endtablehead:]\n{spellLightDiceroll.createRangeTableForTag(\"lightspell\",0,\"lightspell\")}\n[::]\n## {darkMagicType.section()}\n\n[:tablehead:]{darkMagicType.section()} ({spellDarkDiceroll})[:endtablehead:]\n{spellDarkDiceroll.createRangeTableForTag(\"darkspell\",0,\"darkspell\")}"
     }
 }
 ]);

@@ -316,7 +316,7 @@ DATABASE = (window.DATABASE || []).concat([
         ],
     },
     render:{
-        EN:"[:tablehead:]{$.exhaustLabel.getFullName()} ({eventDiceroll})[:endtablehead:]\n{eventDiceroll.createRangeTable(eventTable)}"
+        EN:"[:tablehead:]{$.exhaustLabel.getFullName()} ({eventDiceroll})[:endtablehead:]\n{eventDiceroll.createRangeTable(\"exhaust\",eventTable)}"
     }
 },
 ]);

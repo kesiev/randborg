@@ -52,9 +52,13 @@
         }
     }
 
-    function createTable($,self,caller,inst,mode,results,tables, prefixInstance, prefixCall) {
+    function createTable($,self,caller,inst,id,mode,results,tables, prefixInstance, prefixCall) {
         for (let j=0;j<tables.length;j++) {
             let
+                tabledata = {
+                    roll:self,
+                    results:[]
+                },
                 out = "",
                 table = tables[j],
                 weight,
@@ -77,6 +81,7 @@
                     peaks.push(id);
                 }
             });
+
             if (results.length >= sumWeight) {
                 ratio = Math.floor(results.length / sumWeight);
                 delta = results.length-(ratio*sumWeight);
@@ -90,24 +95,26 @@
                     let
                         prefix = "",
                         gap = distribution[id],
-                        l1, l2;
+                        l1, l2, result;
                     if (table[id].result) {
+                        result = $.renderText(caller,inst,table[id].result);
                         l1 = $.renderText(caller,self,results[head].result);
                         l2 = $.renderText(caller,self,results[head+gap-1].result);
+                        tabledata.results.push({ on:[parseInt(l1), parseInt(l2)], originalResult:table[id].originalResult, result:result });
                         if (prefixInstance) {
                             prefix = $.runInstanceCommand(caller,prefixInstance, prefixCall+"()");
                         }
                         switch (mode) {
                             case 0:{
-                                out+="|"+(l1 == l2 ? l1 : l1+"-"+l2)+"|"+prefix+$.renderText(caller,inst,table[id].result)+"|\n";
+                                out+="|"+(l1 == l2 ? l1 : l1+"-"+l2)+"|"+prefix+result+"|\n";
                                 break;
                             }
                             case 1:{
-                                out+="|"+l2+"|"+prefix+$.renderText(caller,inst,table[id].result)+"|\n";
+                                out+="|"+l2+"|"+prefix+result+"|\n";
                                 break;
                             }
                             case 2:{
-                                out+=(l1 == l2 ? l1 : l1+"-"+l2)+" = "+prefix+$.renderText(caller,inst,table[id].result)+" / ";
+                                out+=(l1 == l2 ? l1 : l1+"-"+l2)+" = "+prefix+result+" / ";
                                 break;
                             }
                         }
@@ -115,6 +122,20 @@
                     }
                     head+=gap;
                 });
+
+                if (id) {
+                    let
+                        baseTableId = tableId = "table-"+id,
+                        tableCount = 0;
+                    if (!$.GLOBALS.generateData.tables)
+                        $.GLOBALS.generateData.tables = 0;
+                    $.GLOBALS.generateData.tables++;
+                    while ($.GLOBALS.generateData[tableId]) {
+                        tableCount++;
+                        tableId = baseTableId + "-" + tableCount;
+                    }
+                    $.GLOBALS.generateData[tableId] = tabledata;
+                }
 
                 switch (mode) {
                     case 2:{
@@ -141,24 +162,24 @@
                     getTableMax:function ($,caller,inst,tables) {
                         return getTableMetadata($,this,caller,inst,this.model.results,tables).maxRow;
                     },
-                    createRangeTable:function ($,caller,inst,tables, prefixInstance, prefixCall) {
-                        return createTable($,this,caller,inst,0,this.model.results,tables, prefixInstance, prefixCall);
+                    createRangeTable:function ($,caller,inst,id,tables, prefixInstance, prefixCall) {
+                        return createTable($,this,caller,inst,id,0,this.model.results,tables, prefixInstance, prefixCall);
                     },
                     createRangeLine:function ($,caller,inst,tables, prefixInstance, prefixCall) {
-                        return createTable($,this,caller,inst,2,this.model.results,tables, prefixInstance, prefixCall);
+                        return createTable($,this,caller,inst,null,2,this.model.results,tables, prefixInstance, prefixCall);
                     },
-                    createTestTable:function ($,caller,inst,tables, prefixInstance, prefixCall) {
-                        return createTable($,this,caller,inst,1,this.model.results,tables, prefixInstance, prefixCall);
+                    createTestTable:function ($,caller,inst,id,tables, prefixInstance, prefixCall) {
+                        return createTable($,this,caller,inst,id,1,this.model.results,tables, prefixInstance, prefixCall);
                     },
-                    createRangeTableForTag:function ($,caller,inst,root,tag, prefixInstance, prefixCall) {
+                    createRangeTableForTag:function ($,caller,inst,id,root,tag, prefixInstance, prefixCall) {
                         let
                             instances = $.getInstancesByTags(caller, [ [ tag ] ], root),
                             table = instances.map(i=>{
-                                return { result:{ EN:$.renderInstance(caller, i) }}
+                                return { originalResult:i, result:{ EN:$.renderInstance(caller, i) }}
                             });
-                        return createTable($,this,caller,inst,0,this.model.results,[ table ], prefixInstance, prefixCall);
+                        return createTable($,this,caller,inst,id,0,this.model.results,[ table ], prefixInstance, prefixCall);
                     },
-                    createRangeTableForTagCall:function ($,caller,inst,root,tag, call, prefixInstance, prefixCall) {
+                    createRangeTableForTagCall:function ($,caller,inst,id,root,tag, call, prefixInstance, prefixCall) {
                         let
                             table = [],
                             instances = $.getInstancesByTags(caller, [ [ tag ] ], root);
@@ -167,10 +188,20 @@
                             let
                                 tabledata = $.runInstanceCommand(caller,i, call+"()");
                             tabledata.forEach(entry=>{
-                                table.push({ weight:entry.weight, result:{ EN:$.renderText(caller, i,entry.result) }});
+                                table.push({ weight:entry.weight, originalResult:i, result:{ EN:$.renderText(caller, i,entry.result) }});
                             })
                         });
-                        return createTable($,this,caller,inst,0,this.model.results,[ table ], prefixInstance, prefixCall);
+                        return createTable($,this,caller,inst,id,0,this.model.results,[ table ], prefixInstance, prefixCall);
+                    },
+                    doRoll:function() {
+                        let
+                            total = 0;
+
+                        dice.forEach(die=>{
+                            total += 1+Math.floor(Math.random()*die);
+                        })
+
+                        return total;
                     },
                     count:{
                         EN:dice.length

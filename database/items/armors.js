@@ -20,7 +20,7 @@ DATABASE = (window.DATABASE || []).concat([
             EN:"wearing medium/heavy armors"
         },
         rollTable:{
-            EN:"[::]\n## Armor\n\n[:tablehead:]{diceroll} ({limitedDiceroll} if you begin with a scroll)[:endtablehead:]\n{diceroll.createRangeTableForTag(this,\"startingarmor\")}"
+            EN:"[::]\n## Armor\n\n[:tablehead:]{diceroll} ({limitedDiceroll} if you begin with a scroll)[:endtablehead:]\n{diceroll.createRangeTableForTag(\"startingarmor\",this,\"startingarmor\")}"
         }
     }
 },{

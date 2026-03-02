@@ -38,6 +38,21 @@ function Viewer() {
                     viewer.innerHTML="<div class='barebones'><div style=\"margin-bottom:30px;background-image:url('database/extrapages/logo.svg');width:100%;height:30vw;max-height:40vh;background-repeat:no-repeat;background-position:center;background-size:contain\"></div>"+markdown(render.text)+"</div>"+FOOTER;
                     decorator.decorate(viewer,render.flags,render.globals,cb);
                 }
+            },{
+                label:"Character roller",
+                run:(viewer, seed, render, cb)=>{
+                    let
+                        playerRoller = new BorgPlayerRoller(lastRender);
+
+                    setBusy(true);
+                    playerRoller.generate((html)=>{
+                        setBusy(false);
+                        viewer.innerHTML="<div class='charactersheet'><div class='characterroller' id='characterroller'><span class='text'>Roll another one</span></div>"+html+"</div>"+FOOTER;
+                        document.getElementById("characterroller").onclick=()=>{
+                            setView(currentView);
+                        }
+                    });
+                }
             }
         ];
 
@@ -116,7 +131,7 @@ function Viewer() {
 
             builder.initialize(()=>{
                 setBusy(false);
-                lastRender = builder.renderInstanceById(0,"rpg")
+                lastRender = builder.renderInstanceById(0,"rpg");
                 cb();
             });
             

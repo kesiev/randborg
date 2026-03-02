@@ -20,7 +20,7 @@ DATABASE = (window.DATABASE || []).concat([
             EN:"wielding two-handed weapons"
         },
         rollTable:{
-            EN:"[::]\n## Weapon\n\n[:tablehead:]{diceroll} ({limitedDiceroll} if you begin with a scroll)[:endtablehead:]\n{diceroll.createRangeTableForTag(this,\"startingweapon\")}"
+            EN:"[::]\n## Weapon\n\n[:tablehead:]{diceroll} ({limitedDiceroll} if you begin with a scroll)[:endtablehead:]\n{diceroll.createRangeTableForTag(\"startingweapon\",this,\"startingweapon\")}"
         }
     }
 },{

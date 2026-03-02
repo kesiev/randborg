@@ -92,7 +92,7 @@ DATABASE = (window.DATABASE || []).concat([
 },
 {
     id:"extrarule-omens",
-    tags:[ "extrarule", "optionalcreationentry" ],
+    tags:[ "extrarule", "optionalcreationentry", "omensystem" ],
     requires:[
         { id:"omenName", ofTags:[ [ "omen", "name" ]]},
         { id:"diceroll", ofTags:[ [ "single", "diceroll", "d2" ]]},

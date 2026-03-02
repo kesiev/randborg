@@ -210,6 +210,15 @@ As usual, I'm leaving this project in the hands of the internet. I hope someone 
 
 Oh, and feel free to share your impressions! See ya!
 
+### The Whynot Lab - Character roller
+
+As most of the manual data is raw, it should be easy to identify which _pieces_ contributed to it and to extract their data to perform some fun stuff. I've added a _character roller_ for each generated manual, so players can fill their character sheets (?) in seconds. You're welcome.
+
+<div align="center" style="margin:60px 0">
+    <p><img src="markdown/charroller.png"></p>
+    <p>Rejoyce! Now you and your friends can dive into the suffering in seconds!</p>
+</div>
+
 ## Full credits
 
 ### Code

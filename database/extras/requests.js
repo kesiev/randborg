@@ -15,7 +15,7 @@ DATABASE = (window.DATABASE || []).concat([
         }
     },
     render:{
-        EN:"# {$.capital(ruler.getDemandName())}\n\n{spellLightDiceroll.createRangeTableForTag(0,\"oraclerequests\")}"
+        EN:"# {$.capital(ruler.getDemandName())}\n\n{spellLightDiceroll.createRangeTableForTag(\"demand\",0,\"oraclerequests\")}"
     }
 },
 ]);

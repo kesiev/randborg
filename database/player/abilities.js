@@ -43,7 +43,7 @@ DATABASE = (window.DATABASE || []).concat([
         }
     },
     render:{
-        EN:"# Abilities\n[:block:]\n{$.makeBulletListOf(0,\"stat\",\"testsShortlist\")}\n\n**Roll {diceroll} and using the Abilities table** to generate each ability score from {diceroll.getTableMin(resultTable)} to {diceroll.getTableMax(resultTable)}. The sum is not used in the game once the character is created, only the table value.\n\nPlayer Characters with a signature skill can roll {diceroll.count()+1}{diceroll.label()} and drop the lowest die for two of their abilities. When the character is later improved an ability can never exceed {maxStatValue()} or {minStatValue()}.\n[:endblock:]\n[:tablehead:]Abilities[:endtablehead:]\n{diceroll.createRangeTable(resultTable)}"
+        EN:"# Abilities\n[:block:]\n{$.makeBulletListOf(0,\"stat\",\"testsShortlist\")}\n\n**Roll {diceroll} and using the Abilities table** to generate each ability score from {diceroll.getTableMin(resultTable)} to {diceroll.getTableMax(resultTable)}. The sum is not used in the game once the character is created, only the table value.\n\nPlayer Characters with a signature skill can roll {diceroll.count()+1}{diceroll.label()} and drop the lowest die for two of their abilities. When the character is later improved an ability can never exceed {maxStatValue()} or {minStatValue()}.\n[:endblock:]\n[:tablehead:]Abilities[:endtablehead:]\n{diceroll.createRangeTable(\"abilities\",resultTable)}"
     }
 },{
     id:"playergrowth-stats-simple",

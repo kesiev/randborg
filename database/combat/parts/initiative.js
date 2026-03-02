@@ -16,7 +16,7 @@ DATABASE = (window.DATABASE || []).concat([
         ]
     },
     render:{
-        EN:"[:tablehead:]Initiative ({diceroll})[:endtablehead:]\n{diceroll.createRangeTable(resultTable)}\n[:block:]\n\n_{initiativeStat} + {initiativeDiceroll} for individual initiative or to determine who goes first within the group._\n\nPlayers roll for both their attacks and defences. Creatures and enemies don't roll dice in combat.\n\nThe {$.playerTest.symbol()} for attacks and defence are modified as with any test.\n\n[:endblock:]\n"
+        EN:"[:tablehead:]Initiative ({diceroll})[:endtablehead:]\n{diceroll.createRangeTable(\"initiative\",resultTable)}\n[:block:]\n\n_{initiativeStat} + {initiativeDiceroll} for individual initiative or to determine who goes first within the group._\n\nPlayers roll for both their attacks and defences. Creatures and enemies don't roll dice in combat.\n\nThe {$.playerTest.symbol()} for attacks and defence are modified as with any test.\n\n[:endblock:]\n"
     }
 },
 ]);
