@@ -55,7 +55,7 @@ In general, during a roleplaying session and from time to time, the GM may need 
 
 In this manual, neither the font nor the text alignments are predictable or uniform, and the illustrations, with their uneven style and bright colors, push it in every direction.
 
-Some might say that _style has killed usability. But, in my opinion, that murder conceals a secret, an almost whispered pact between them. It conceals _that why_ from the chapter before.
+Some might say that _style has killed usability_. But, in my opinion, that murder conceals a secret, an almost whispered pact between them. It conceals _that why_ from the chapter before.
 
 Everything in M&ouml;rk Borg, from the graphics to the rules, is **modular** and **interpretable**. It's a sacred text to be interpreted. It's a tattered artifact. It's a Lego with a thousand shapes.
 
@@ -73,7 +73,7 @@ _Written by hundreds of now nameless hands._
 
 Voil&agrave;. There it is, the secret, in plain sight.
 
-Whether you're a master artist or can make a few stylized drawings, whether you know how to formulate a game with complex rules or are barely able to understand the odds of a number rolling on a die, there's only a fragment of you left in this world. You just have to describe _that fragment_.
+Whether you're a master artist or can make a few stylized drawings, whether you know how to formulate a game with complex rules or are barely able to understand the odds of a number rolling on a die, there's only a fragment of you left in the M&ouml;rk Borg world. You just have to describe _that fragment_.
 
 Anyone can add rubble to the Dark Castle. Those who visit will find a place for them.
 
@@ -83,27 +83,27 @@ _But is it true?_
 
 ### The Monster Oracle
 
-Time for me to introduce _the Monster Oracle_ that moves RAND BORG.
+Time for me to introduce _the monster oracle_ that moves RAND BORG.
 
 <div align="center" style="margin:60px 0">
     <p><img src="markdown/oracle.png"></p>
     <p>The oracle network behind RAND BORG.</p>
 </div>
 
-You can see _a slightly more readable version_ [here](markdown/oracle.svg).
+You can see _a slightly more readable version_ [here](markdown/oracle.svg). Hit the GitHub _Raw_ button to zoom/pan. it.
 
-To prove my theory, first I've _dissected_ some M&ouml;rk Borg manual parts to separate all the systems and relations between them...
+To prove my theory, first I've _splitted_ some M&ouml;rk Borg manual parts to separate all the systems and relations between them...
 
 <div align="center" style="margin:60px 0">
     <p><img src="markdown/system-manual.png"></p>
     <p>How I've split the systems from the manual. (from the free <a target=_blank href='https://morkborg.com/content/'>Bare Bones</a> version)</p>
 </div>
 
-...then I've joined them back together...
+...then I've put these systems in _boxes_ and joined them back together...
 
 <div align="center" style="margin:60px 0">
     <p><img src="markdown/system-network.png"></p>
-    <p>A slice of the Monster Oracle</p>
+    <p>A slice of the monster oracle</p>
 </div>
 
 ...then, I've coded a program that put all the parts in their original places...
@@ -165,9 +165,9 @@ To these 3, I've added 3 new systems that add a cyberpunk (`setting-cyberpunk`),
 
 But _words_ are just one half of the puzzle. In the M&ouml;rk Borg manual, they have a dialogue with the images, the colors, and the symbols around them. Images and words must be decoded to create a glimpse of the game world.
 
-But their meaning _is incomplete_ as many of their parts _are missing_. These missing parts are _inside the reader_, which will pull them from his mind to create an image that speaks as much about the game as it does about himself.
+However, it will still be impossible, as the key that encodes that dialogue _has been lost_. This key will be provided by _the reader himself_, who will use its creativity to approximate a plausible image... that speaks as much about the game as it does about himself.
 
-So, I've built _an oracle for the page layout_. Images, fonts, color palettes, text arrangements, paper effects, rotations, and anything else are decided by the roll of a dice. My _beautiful mess_ mutated into a _kaleidoscope of madness_.
+So, to recreate this _unreadable dialogue_ between images and words, I've built _a page layout oracle_. Images, fonts, color palettes, text arrangements, paper effects, rotations, and anything else are decided by the roll of a dice. My _beautiful mess_ mutated into a _kaleidoscope of madness_.
 
 <div align="center" style="margin:60px 0">
     <p><img src="markdown/sample-place.png"></p>
@@ -204,7 +204,7 @@ It's a sweet torture for the mind and the eyes, where hundreds of pieces and pix
 
 _The Massive Randomness met Nechrubel in the interstice between the Cycles. It whispered to him of the GM and the Players who drag the suffering souls of his world. It whispered to him of a way to bring torment and apocalypse to them, too. It whispered to him how to create unlimited worlds of pure chaos..._
 
-Art is always filtered by those who experience it, and it's difficult to explain objectively. However, RAND Borg managed to convince me of my theories. Furthermore, it gave me a place to go from time to time when I'm in search of inspiration.
+Art is always filtered by those who experience it, and it's difficult to explain objectively. However, RAND BORG managed to convince me of my theories. Furthermore, it gave me a place to go from time to time when I'm in search of inspiration.
 
 As usual, I'm leaving this project in the hands of the internet. I hope someone else finds it useful and interesting.
 
