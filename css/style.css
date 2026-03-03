@@ -300,12 +300,20 @@ BODY {
 }
 
 @media print {
-  .bar, .footer {
+  .bar, .footer, .characterroller {
     display: none !important;
   }
-  .page {
-    width:100%; 
-    height:100%;
-    page-break-after:always;
+
+  .characterroller .text, .sheetsegmentedbar, .sheetbar, .sheetboxes {
+    color: #000;
+    border-color: #000;
+  }
+
+  .sheetboxes .sheetheader {
+    border:1px solid #000;
+  }
+
+  BODY {
+    background-color: #fff;
   }
 }
