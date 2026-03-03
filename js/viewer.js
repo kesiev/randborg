@@ -108,13 +108,13 @@ function Viewer() {
                         }
                     }
 
-                    viewer.innerHTML = "<div class='coloringbookbox'><div class='coloringbookheader'></div><p>Want to illustrate your Borg-like by hand, inspired by random words? You've come to the right place!</p><p>Here you can download a black-and-white, no illustrations PDF version of this manual. Print out the pages you're interested in, grab anything can leave a trace, and let your madness flow!</p><div class='coloringcolorbutton' id='printbutton'>"+buttonText+"</div></div><div id='hiddenviewer' style='height:0px;width:0px;overflow:hidden'></div>";
+                    viewer.innerHTML = "<div class='coloringbookbox'><div class='coloringbookheader'></div><p>Want to illustrate your Borg-like by hand, inspired by random words? You've come to the right place!</p><p>Here you can download a black-and-white, no illustrations PDF version of this manual. Print out the pages you're interested in, grab anything can leave a trace, and let your madness flow!</p><div class='coloringcolorbutton' id='printbutton'>"+buttonText+"</div></div><div id='hiddenviewer' style='height:0px;width:0px;overflow:hidden'></div>"+FOOTER;
                     printButton = document.getElementById("printbutton");
                     printButton.onclick = ()=>{
                         if (!isBusy) {
                             setBusy(true);
                             richView(document.getElementById("hiddenviewer"), seed, render, "singlePage",20,"px",()=>{
-                                
+
                                 fileName = "randborg-coloringbook-"+lastRender.seed+".pdf";
                                 
                                 setBusy(true);
@@ -128,6 +128,7 @@ function Viewer() {
                                     { get:".page .content *", style:{ backgroundColor:"transparent", color:"#000", textShadow:"none", boxShadow:"none" } },
                                     { get:".page .content TR", style:{ borderColor:"#000" } },
                                     { get:".page h3", style:{ borderColor:"#000" } },
+                                    { get:".page .svgmap", decolorSvg:true },
                                 ].forEach(change=>{
                                     let
                                         nodes = [...document.querySelectorAll(change.get)];
@@ -138,6 +139,14 @@ function Viewer() {
                                         if (change.style) {
                                             for (let k in change.style) {
                                                 node.style[k] = change.style[k];
+                                            }
+                                        }
+                                        if (change.decolorSvg) {
+                                            if (node._originalSvg) {
+                                                let
+                                                    svg = node._originalSvg;
+                                                svg = svg.replace(/fill:rgba\([^)]+\)/,"fill:rgba(255,255,255,1)");
+                                                node.style.backgroundImage = "url(data:image/svg+xml;base64,"+btoa(svg)+")";
                                             }
                                         }
                                     })

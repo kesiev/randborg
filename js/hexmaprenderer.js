@@ -158,9 +158,11 @@ let HexmapRenderer = function(measure) {
 
         }
 
+        div.className = "svgmap";
         div.style.position = "absolute";
         div.style.backgroundSize = "contain";
         div.style.backgroundImage = "url(data:image/svg+xml;base64,"+btoa(svg)+")";
+        div._originalSvg = svg;
         div.style.width = measure.solve(style.hex.size+"msr");
         div.style.height = measure.solve(style.hex.size+"msr");
         div.style.left = measure.solve(cellX+"msr");
