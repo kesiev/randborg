@@ -210,7 +210,7 @@ As usual, I'm leaving this project in the hands of the internet. I hope someone 
 
 Oh, and feel free to share your impressions! See ya!
 
-### The Whynot Lab - Character roller
+### The Whynot Lab - Character roller!
 
 As most of the manual data is raw, it should be easy to identify which _pieces_ contributed to it and to extract their data to perform some fun stuff. I've added a _character roller_ for each generated manual, so players can fill their character sheets (?) in seconds. You're welcome.
 
@@ -218,6 +218,21 @@ As most of the manual data is raw, it should be easy to identify which _pieces_ 
     <p><img src="markdown/charroller.png"></p>
     <p>Rejoyce! Now you and your friends can dive into the suffering in seconds!</p>
 </div>
+
+### The Whynot Lab - Coloring book!
+
+One of the main features I envisioned for RAND BORG was to provide a downloadable "coloring book" version. Anyone could print out a black-and-white version of the manual and draw whatever they wanted with whatever tools they wanted.
+
+Why? Always to test the _vague_ dialogue between images and text and to prove the accessibile nature of the M&ouml;rk Borg art movement: what would happen if the reader were delegated not only to interpret the manual but also to create the _other half_ of the key to understanding the texts?
+
+The technology I chose to create the page layout isn't exactly friendly to this kind of thing, and I abandoned the idea. But hey, why not try again _with a dirty hack_?
+
+<div align="center" style="margin:60px 0">
+    <p><img src="images/coloring.png"></p>
+    <p>I've illustrated a a megalomaniac RAND BORG version, based on a necromantic me and freckled skulls.</p>
+</div>
+
+Does it work? I don't know. But I had a blast picking up the marker again. Feature held!
 
 ## Full credits
 

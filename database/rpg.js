@@ -84,6 +84,8 @@ DATABASE = (DATABASE || []).concat([
 
             "**CODE** "+
             "Drawdown library by Adam Leggett (MIT) - modified by KesieV / "+
+            "jsPDF (MIT) by Parallax / "+
+            "html2canvas (MIT) by  Niklas von Hertzen / "+
             "Everything else by KesieV ({$.license()})"+
             "\n\n"+
 

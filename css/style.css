@@ -85,6 +85,41 @@ BODY {
   color:#f00;
 }
 
+.coloringbookbox {
+  width: 40%;
+  margin: auto;
+  color:#fff;
+  font-family: seshat;
+  font-size: 16px;
+  color: #fff;
+  text-align: center;
+  line-height: 20px;
+}
+
+.coloringcolorbutton {
+  font-family: ferrum;
+  display: inline-block;
+  background-color: #fff;
+  color:#000;
+  padding:10px;
+  margin-bottom: 10px;
+  font-size: 24px;
+  box-shadow: 2px 2px 1px #000;
+  transform:rotate(-2deg);
+  margin-top:20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.coloringbookheader {
+  background-image:url('../images/coloring.png');
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height:350px;
+  margin:30px 0 30px 0;
+}
+
 .charactersheet {
   width: 40%;
   margin: auto;
@@ -123,6 +158,7 @@ BODY {
 .sheetsegmentedbar, .sheetbar, .sheetboxes {
   font-family: seshat;
   font-size: 16px;
+  line-height: 20px;
   color: #fff;
   border-top: 1px solid #fff;
 }
@@ -211,8 +247,13 @@ BODY {
   .charactersheet {
     width: 100%;
   }
-}
 
+  .coloringbookheader {
+    margin-top:60px;
+    height:200px;
+  }
+  
+}
 
 @media (max-width: 600px) {
   .bar .logo {
@@ -246,5 +287,25 @@ BODY {
     margin: 50px auto 20px auto;
   }
 
+  .coloringbookbox {
+    width: 100%;
+    padding:0 10px;
+  }
 
+  .coloringbookheader {
+    margin-top:60px;
+    height:250px;
+  }
+
+}
+
+@media print {
+  .bar, .footer {
+    display: none !important;
+  }
+  .page {
+    width:100%; 
+    height:100%;
+    page-break-after:always;
+  }
 }

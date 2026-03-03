@@ -53,6 +53,107 @@ function Viewer() {
                         }
                     });
                 }
+            },{
+                label:"Coloring book",
+                run:(viewer, seed, render, cb)=>{
+
+                    let
+                        buttonText = "Download PDF",
+                        fileName,
+                        isDone,
+                        doc,
+                        width,
+                        height,
+                        pages,
+                        renderConfig,
+                        printButton;
+
+                    function addPage(id,cb) {
+                        let
+                            page = pages[id];
+
+                        if (isDone) {
+
+                            doc.save(fileName);
+                            cb();
+
+                        } else if (page) {
+
+                            printButton.innerHTML = "Preparing page "+(id+1)+"/"+pages.length+"...";
+
+                            if (id == 0) {
+                                doc = new jspdf.jsPDF({
+                                    orientation:"p",
+                                    unit: 'mm',
+                                    format:[ 148, 210 ]
+                                });
+                                width = doc.internal.pageSize.getWidth();
+                                height = doc.internal.pageSize.getHeight();
+                                renderConfig = {
+                                    scale:2
+                                }
+                            } else {
+                                doc.addPage(null, "p");
+                            }
+                            html2canvas(page, renderConfig).then(canvas => {
+                                doc.addImage(canvas, "JPEG", 0, 0, width, height);
+                                addPage(id+1,cb);
+                            });
+                        } else {
+                            printButton.innerHTML = buttonText;
+
+                            isDone = true;
+                            doc.save(fileName);
+                            cb();
+                        }
+                    }
+
+                    viewer.innerHTML = "<div class='coloringbookbox'><div class='coloringbookheader'></div><p>Want to illustrate your Borg-like by hand, inspired by random words? You've come to the right place!</p><p>Here you can download a black-and-white, no illustrations PDF version of this manual. Print out the pages you're interested in, grab anything can leave a trace, and let your madness flow!</p><div class='coloringcolorbutton' id='printbutton'>"+buttonText+"</div></div><div id='hiddenviewer' style='height:0px;width:0px;overflow:hidden'></div>";
+                    printButton = document.getElementById("printbutton");
+                    printButton.onclick = ()=>{
+                        if (!isBusy) {
+                            setBusy(true);
+                            richView(document.getElementById("hiddenviewer"), seed, render, "singlePage",20,"px",()=>{
+                                
+                                fileName = "randborg-coloringbook-"+lastRender.seed+".pdf";
+                                
+                                setBusy(true);
+                                [
+                                    { get:".layer.overlay", remove:true },
+                                    { get:".layer.art", remove:true },
+                                    { get:".layer.overart", remove:true },
+                                    { get:".page .borders", style:{ borderWidth:0 } },
+                                    { get:".page", style:{ background:"none" } },
+                                    { get:".page .layer.art", style:{ background:"none" } },
+                                    { get:".page .content *", style:{ backgroundColor:"transparent", color:"#000", textShadow:"none", boxShadow:"none" } },
+                                    { get:".page .content TR", style:{ borderColor:"#000" } },
+                                    { get:".page h3", style:{ borderColor:"#000" } },
+                                ].forEach(change=>{
+                                    let
+                                        nodes = [...document.querySelectorAll(change.get)];
+
+                                    nodes.forEach(node=>{
+                                        if (change.remove)
+                                            node.parentNode.removeChild(node);
+                                        if (change.style) {
+                                            for (let k in change.style) {
+                                                node.style[k] = change.style[k];
+                                            }
+                                        }
+                                    })
+                                })
+
+                                pages = document.getElementsByClassName("page");
+                                addPage(0,()=>{
+                                    setBusy(false);
+                                });
+                                
+                            });
+                        }
+                    }
+
+                    cb();
+                }
             }
         ];
 
