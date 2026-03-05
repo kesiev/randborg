@@ -191,6 +191,7 @@ let HexmapRenderer = function(measure) {
             labelX = cellX - 1 - 30;
         }
 
+        div.className="mappoi";
         labelDiv.style.position = div.style.position = "absolute";
         div.style.width = measure.solve("1msr");
         div.style.height = measure.solve("1msr");
@@ -201,6 +202,7 @@ let HexmapRenderer = function(measure) {
         labelDiv.style.top = measure.solve(labelY+"msr");
         labelDiv.style.fontSize = labelDiv.style.lineHeight = measure.solve(fontSize+"msr");
         
+        span.className="maplabel";
         span.style.padding = measure.solve("0.2msr");
         span.style.color = "#fff";
         span.style.backgroundColor = "rgba(0,0,0,0.5)";
@@ -221,6 +223,7 @@ let HexmapRenderer = function(measure) {
             foreColor = "#000",
             div = document.createElement("div");
 
+        div.className="maplabel";
         div.style.position = "absolute";
         div.style.width = measure.solve("20msr");
         div.style.textAlign = "center";

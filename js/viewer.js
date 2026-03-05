@@ -57,6 +57,18 @@ function Viewer() {
                 label:"Coloring book",
                 run:(viewer, seed, render, cb)=>{
 
+                    function makeOutline(size,color) {
+                        let
+                            parts = [];
+
+                        for (let i=1;i<size;i++)
+                            for (let y=-size;y<size;y++)
+                                for (let x=-size;x<size;x++)
+                                    parts.push(x+"px "+y+"px 1px "+color);
+
+                        return parts.join(", ");
+                    }
+
                     let
                         buttonText = "Download PDF",
                         fileName,
@@ -129,6 +141,9 @@ function Viewer() {
                                     { get:".page .content TR", style:{ borderColor:"#000" } },
                                     { get:".page h3", style:{ borderColor:"#000" } },
                                     { get:".page .svgmap", decolorSvg:true },
+                                    { get:".page .svgmap", decolorSvg:true },
+                                    { get:".page.map .mappoi", style:{ backgroundColor:"#000" } },
+                                    { get:".page.map .maplabel", style:{ textShadow:makeOutline(5,"#fff") } },
                                 ].forEach(change=>{
                                     let
                                         nodes = [...document.querySelectorAll(change.get)];
