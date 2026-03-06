@@ -240,6 +240,8 @@ Does it work? I don't know. But I had a blast picking up the marker again. Featu
 
  - **RAND BORG code** by KesieV ([GPL3](LICENSE))
  - [Drawdown](https://github.com/adamvleggett/drawdown) library by Adam Leggett ([MIT](https://github.com/adamvleggett/drawdown/blob/master/LICENSE)) - modified by KesieV for the project
+ - [jsPDF](https://github.com/parallax/jsPDF) library by Parallax ([MIT](https://github.com/parallax/jsPDF/blob/master/LICENSE))
+ - [html2canvas](https://github.com/niklasvh/html2canvas) by Niklas von Hertzen ([MIT](https://github.com/niklasvh/html2canvas/blob/master/LICENSE))
 
 ### Images
 
