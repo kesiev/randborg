@@ -16,22 +16,22 @@ function Viewer() {
         VIEWS = [
             {
                 label:"1 page, full width",
-                run:(viewer, seed, render, cb)=>{
-                    richView(viewer, seed, render, "singlePage",1,"vw",cb);
+                run:(viewer, seed, render, palette, cb)=>{
+                    richView(viewer, seed, render, palette.plain, "singlePage",1,"vw",cb);
                 }
             },{
                 label:"1 page, full height",
-                run:(viewer, seed, render, cb)=>{
-                    richView(viewer, seed, render, "singlePage",1,"vh",cb);
+                run:(viewer, seed, render, palette, cb)=>{
+                    richView(viewer, seed, render, palette.plain, "singlePage",1,"vh",cb);
                 }
             },{
                 label:"2 pages, full width",
-                run:(viewer, seed, render, cb)=>{
-                    richView(viewer, seed, render, "doublePage",0.4759,"vw",cb);
+                run:(viewer, seed, render, palette, cb)=>{
+                    richView(viewer, seed, render, palette.plain, "doublePage",0.4759,"vw",cb);
                 }
             },{
                 label:"Bare bones",
-                run:(viewer, seed, render, cb)=>{
+                run:(viewer, seed, render, palette, cb)=>{
                     let
                         measure = new Measure(1,"vw"),
                         decorator = new BareDecorator(seed, render.language, measure);
@@ -40,12 +40,13 @@ function Viewer() {
                 }
             },{
                 label:"Character roller",
-                run:(viewer, seed, render, cb)=>{
+                run:(viewer, seed, render, palette, cb)=>{
                     let
+                        id = Math.floor(Math.random()*palette.light.length),
                         playerRoller = new BorgPlayerRoller(lastRender);
 
                     setBusy(true);
-                    playerRoller.generate((html)=>{
+                    playerRoller.generate(palette.plain[id], palette.light[id], (html)=>{
                         setBusy(false);
                         viewer.innerHTML="<div class='charactersheet'><div class='characterroller' id='characterroller'><span class='text'>Roll another one</span></div>"+html+"</div>"+FOOTER;
                         document.getElementById("characterroller").onclick=()=>{
@@ -55,7 +56,7 @@ function Viewer() {
                 }
             },{
                 label:"Coloring book",
-                run:(viewer, seed, render, cb)=>{
+                run:(viewer, seed, render, palette, cb)=>{
 
                     function makeOutline(size,color) {
                         let
@@ -70,6 +71,7 @@ function Viewer() {
                     }
 
                     let
+                        color = palette.light[Math.floor(Math.random()*palette.light.length)],
                         buttonText = "Download PDF",
                         fileName,
                         isDone,
@@ -120,12 +122,12 @@ function Viewer() {
                         }
                     }
 
-                    viewer.innerHTML = "<div class='coloringbookbox'><div class='coloringbookheader'></div><p>Want to illustrate your Borg-like by hand, inspired by random words? You've come to the right place!</p><p>Here you can download a black-and-white, no illustrations PDF version of this manual. Print out the pages you're interested in, grab anything can leave a trace, and let your madness flow!</p><div class='coloringcolorbutton' id='printbutton'>"+buttonText+"</div></div><div id='hiddenviewer' style='height:0px;width:0px;overflow:hidden'></div>"+FOOTER;
+                    viewer.innerHTML = "<div class='coloringbookbox'><div class='coloringbookheader'></div><p>Want to illustrate your Borg-like by hand, inspired by random words? You've come to the right place!</p><p>Here you can download a black-and-white, no illustrations PDF version of this manual. Print out the pages you're interested in, grab anything can leave a trace, and let your madness flow!</p><div class='coloringcolorbutton' id='printbutton' style='background-color:"+color+"'>"+buttonText+"</div></div><div id='hiddenviewer' style='height:0px;width:0px;overflow:hidden'></div>"+FOOTER;
                     printButton = document.getElementById("printbutton");
                     printButton.onclick = ()=>{
                         if (!isBusy) {
                             setBusy(true);
-                            richView(document.getElementById("hiddenviewer"), seed, render, "singlePage",20,"px",()=>{
+                            richView(document.getElementById("hiddenviewer"), seed, render, palette.plain, "singlePage",20,"px",()=>{
 
                                 fileName = "randborg-coloringbook-"+lastRender.seed+".pdf";
                                 
@@ -212,13 +214,13 @@ function Viewer() {
     barlogo.style.backgroundImage = "url('database/extrapages/header-logo.svg')";
     button.innerHTML = "New Seed";
 
-    function richView(viewer, seed, render, layout, measureratio, measureunit, cb) {
+    function richView(viewer, seed, render, palette, layout, measureratio, measureunit, cb) {
         let
             measure = new Measure(measureratio,measureunit),
             decorator = new BorgDecorator(seed, render.language, measure);
 
         viewer.innerHTML=markdown(render.text)+FOOTER;
-        decorator.decorate(viewer,layout,render.flags,render.globals,cb)
+        decorator.decorate(viewer,layout,palette,render.flags,render.globals,cb)
     }
 
     function setBusy(mode) {
@@ -255,8 +257,12 @@ function Viewer() {
             document.location.hash = "#"+seed;
 
             builder.initialize(()=>{
+                let
+                    paletteBuilder = new PaletteBuilder(seed);
+
                 setBusy(false);
                 lastRender = builder.renderInstanceById(0,"rpg");
+                lastPalette = paletteBuilder.build();
                 cb();
             });
             
@@ -272,7 +278,7 @@ function Viewer() {
         prepareData(changeseed === undefined ? seed : changeseed,()=>{
             viewer.innerHTML = "";
             setBusy(true);
-            VIEWS[currentView].run(viewer, seed, lastRender, ()=>{
+            VIEWS[currentView].run(viewer, seed, lastRender, lastPalette, ()=>{
                 setBusy(false);
             });
         });

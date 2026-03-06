@@ -89,9 +89,10 @@ BorgPlayerRoller = function(render) {
         randomizer = new Random(Math.random()*999999);
 
     return {
-        generate:(cb)=>{
+        generate:(plainColor, lightColor, cb)=>{
             nameGenerator.initialize(()=>{
                 let
+                    globalStyle = "border-color:"+plainColor,
                     html = "",
                     sheet = {},
                     stats = [],
@@ -108,6 +109,8 @@ BorgPlayerRoller = function(render) {
                 })
 
                 sheet.HP = sheet[hpStat] + rollDie(8);
+                if (sheet.HP < 1) sheet.HP = 1;
+
                 sheet.GOLD = (rollDie(6) + rollDie(6))*10;
                 sheet.NAME = capitalize(nameGenerator.generate(randomizer,"[Player]"));
 
@@ -135,11 +138,11 @@ BorgPlayerRoller = function(render) {
                     equipment.push(item.result);
                 })
 
-                html += "<div class='sheetbar'>";
+                html += "<div class='sheetbar' style='"+globalStyle+"'>";
                 html += "<div class='sheetitem'><div class='sheetkey'>Born from Seed</div> #"+render.seed+"</div>";
                 html += "</div>";
 
-                html += "<div class='sheetsegmentedbar'>";
+                html += "<div class='sheetsegmentedbar' style='"+globalStyle+"'>";
                 html += "<div class='sheetitem'></div>";
                 html += "<div class='sheetitem'><div class='sheetkey'>Name</div> "+sheet.NAME+"</div>";
                 html += "<div class='sheetitem'><div class='sheetkey'>HP</div> "+sheet.HP+"/"+sheet.HP+"</div>";
@@ -149,8 +152,8 @@ BorgPlayerRoller = function(render) {
                 html += "<div class='sheetitem'></div>";
                 html += "</div>";
 
-                html += "<div class='sheetboxes'>";
-                html += "<div class='sheetitem'><div class='sheetheader'>Abilities</div><div class='sheetvalue'>";
+                html += "<div class='sheetboxes' style='"+globalStyle+"'>";
+                html += "<div class='sheetitem' style='"+globalStyle+"'><div class='sheetheader' style='background-color:"+lightColor+"'>Abilities</div><div class='sheetvalue'>";
 
                 stats.forEach(ability=>{
                     html+="<div class='sheetvalueitem'><div class='sheetkey'>"+ability.label+"</div> "+ability.value+"</div>";
@@ -158,7 +161,7 @@ BorgPlayerRoller = function(render) {
 
                 html += "</div></div>";
 
-                html += "<div class='sheetitem'><div class='sheetheader'>Equipment</div><div class='sheetvalue'>";
+                html += "<div class='sheetitem' style='"+globalStyle+"'><div class='sheetheader' style='background-color:"+lightColor+"'>Equipment</div><div class='sheetvalue'>";
 
                 equipment.forEach(item=>{
                     html+="<div class='sheetvalueitem'>"+highlight(item)+"</div>";
@@ -168,7 +171,7 @@ BorgPlayerRoller = function(render) {
                 
                 if (sheet.RULER) {
 
-                    html += "<div class='sheetbar'>";
+                    html += "<div class='sheetbar' style='"+globalStyle+"'>";
                     html += "<div class='sheetitem'><div class='sheetkey'>"+sheet.RULER+"</div> "+highlight(sheet.RULERDEMAND)+"</div>";
                     html += "</div>";
 

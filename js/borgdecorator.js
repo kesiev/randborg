@@ -592,28 +592,6 @@ function BorgDecorator(seed, language, measure) {
             ]
         };
 
-    function harmonize(color, start, end, interval) {
-        const colors = [color]
-        const [h, s, l] = parseHSL(color)
-
-        for(let i = start; i <= end; i += interval) {
-            const h1 = (h + i) % 360
-            const c1 = `hsl(${h1}, ${s}%, ${l}%)`
-            colors.push(c1)
-        }
-
-        return colors
-    }
-
-    function parseHSL(str) {
-        var hsl, h, s, l
-        hsl = str.replace(/[^\d,]/g, '').split(',')   // strip non digits ('%')  
-        h = Number(hsl[0])                            // convert to number
-        s = Number(hsl[1])
-        l = Number(hsl[2])
-        return [h, s, l]                              // return parts
-    }
-
     function solve(attr, vars) {
         if (attr.randomly)
             attr = random.element(attr.randomly);
@@ -773,11 +751,9 @@ function BorgDecorator(seed, language, measure) {
     }
 
     return {
-        decorate:(root, layout, flags, globals, cb)=>{
+        decorate:(root, layout, palette, flags, globals, cb)=>{
             
             let
-                rp = 'hsl('+random.integer(360)+', 80%, 40%)',
-                palette =  harmonize(rp, 150, 210, 60),
                 vars = {
                     art:{ assets:{}, assetsList:[], actions:[] },
                     packs:{ stencils:[], photos:[], textures:[], grunge:[], fontText:[], fontTitle:[], fontEffect:[], fontIntro:[] },
@@ -803,9 +779,6 @@ function BorgDecorator(seed, language, measure) {
                     vars.packs.fontIntro = vars.packs.fontIntro.concat(FONTS.bySetting[k].intros);
                 }
             }
-
-            palette.push("#222");
-            palette.push("#eee");
 
             applyTransforms(root, vars, STYLES.layouts[layout]);
             applyTransforms(root, vars, STYLES.run);
