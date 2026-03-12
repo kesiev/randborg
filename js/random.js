@@ -75,11 +75,20 @@ function Random(seed) {
                     pos = bag.elements.indexOf(element);
 
                 if (pos != -1) {
-                    if (!bag.list)
-                        bag.list = [];
+                    let
+                        bagPosition;
 
-                    if (bag.list.indexOf(pos) == -1) {
-                        bag.list.push(pos);
+                    if (!bag.list) {
+                        bag.list = [];
+                        if (bag.list.length == 0)
+                            for (let i=0;i<bag.elements.length;i++)
+                                bag.list.push(i);
+                    }
+
+                    bagPosition = bag.list.indexOf(pos);
+
+                    if (bagPosition != -1) {
+                        bag.list.splice(bagPosition,1);
                     }
 
                 }
